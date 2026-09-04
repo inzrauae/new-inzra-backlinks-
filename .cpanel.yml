@@ -1,17 +1,15 @@
 ---
 deployment:
   tasks:
-    - export APPPATH=/home/seoweb/inzra-app
-    - export DEPLOYPATH=/home/seoweb/public_html
-    - /bin/mkdir -p $APPPATH
-    - /usr/bin/rsync -av --delete --exclude=.git --exclude=.gitignore --exclude=.gitattributes --exclude=.cpanel.yml --exclude=.vscode --exclude=.claude --exclude=.env --exclude=tests --exclude=legacy-static-reference --exclude=deploy --exclude=SEO_GEO_OPTIMIZATION.md --exclude=DEPLOYMENT.md --exclude='eBay-all-active-listings-report-*.csv' --exclude=public/build $PWD/ $APPPATH/
-    - /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --working-dir=$APPPATH
-    - test -f $APPPATH/.env || /bin/cp $APPPATH/.env.example $APPPATH/.env
-    - /usr/local/bin/php $APPPATH/artisan migrate --force
-    - /usr/local/bin/php $APPPATH/artisan config:cache
-    - /usr/local/bin/php $APPPATH/artisan route:cache
-    - /usr/local/bin/php $APPPATH/artisan view:cache
-    - /usr/local/bin/php $APPPATH/artisan storage:link || true
-    - /usr/bin/rsync -av --delete $APPPATH/public/ $DEPLOYPATH/
-    - /bin/cp $APPPATH/deploy/public-index.php $DEPLOYPATH/index.php
-    - /bin/chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
+    - /bin/mkdir -p /home/seoweb/inzra-app
+    - /usr/bin/rsync -av --delete --exclude=.git --exclude=.gitignore --exclude=.gitattributes --exclude=.cpanel.yml --exclude=.vscode --exclude=.claude --exclude=.env --exclude=tests --exclude=legacy-static-reference --exclude=deploy --exclude=SEO_GEO_OPTIMIZATION.md --exclude=DEPLOYMENT.md --exclude='eBay-all-active-listings-report-*.csv' --exclude=public/build $PWD/ /home/seoweb/inzra-app/
+    - test -f /home/seoweb/inzra-app/.env || /bin/cp /home/seoweb/inzra-app/.env.example /home/seoweb/inzra-app/.env
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --working-dir=/home/seoweb/inzra-app
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan migrate --force
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan config:cache
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan route:cache
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan view:cache
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan storage:link || true
+    - /usr/bin/rsync -av --delete /home/seoweb/inzra-app/public/ /home/seoweb/public_html/
+    - /bin/cp /home/seoweb/inzra-app/deploy/public-index.php /home/seoweb/public_html/index.php
+    - /bin/chmod -R 775 /home/seoweb/inzra-app/storage /home/seoweb/inzra-app/bootstrap/cache
