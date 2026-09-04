@@ -1,5 +1,17 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/seoweb/public_html/
-    - /usr/bin/rsync -av --delete --exclude=.git --exclude=.cpanel.yml --exclude=.gitignore --exclude=.vscode --exclude=.claude --exclude='New folder' --exclude='images/products/New folder (3)' --exclude=SEO_GEO_OPTIMIZATION.md --exclude='eBay-all-active-listings-report-*.csv' $PWD/ $DEPLOYPATH
+    - export APPPATH=/home/seoweb/inzra-app
+    - export DEPLOYPATH=/home/seoweb/public_html
+    - /bin/mkdir -p $APPPATH
+    - /usr/bin/rsync -av --delete --exclude=.git --exclude=.gitignore --exclude=.gitattributes --exclude=.cpanel.yml --exclude=.vscode --exclude=.claude --exclude=.env --exclude=tests --exclude=legacy-static-reference --exclude=deploy --exclude=SEO_GEO_OPTIMIZATION.md --exclude=DEPLOYMENT.md --exclude='eBay-all-active-listings-report-*.csv' --exclude=public/build $PWD/ $APPPATH/
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --working-dir=$APPPATH
+    - test -f $APPPATH/.env || /bin/cp $APPPATH/.env.example $APPPATH/.env
+    - /usr/local/bin/php $APPPATH/artisan migrate --force
+    - /usr/local/bin/php $APPPATH/artisan config:cache
+    - /usr/local/bin/php $APPPATH/artisan route:cache
+    - /usr/local/bin/php $APPPATH/artisan view:cache
+    - /usr/local/bin/php $APPPATH/artisan storage:link || true
+    - /usr/bin/rsync -av --delete $APPPATH/public/ $DEPLOYPATH/
+    - /bin/cp $APPPATH/deploy/public-index.php $DEPLOYPATH/index.php
+    - /bin/chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache

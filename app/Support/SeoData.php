@@ -1,0 +1,322 @@
+<?php
+
+namespace App\Support;
+
+use App\Models\BlogPost;
+use App\Models\Product;
+
+final readonly class SeoData
+{
+    public function __construct(
+        public string $title,
+        public string $description,
+        public string $canonical,
+        public string $ogType = 'website',
+        public ?string $ogImage = null,
+        public ?string $keywords = null,
+        public string $robots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+        public array $jsonLd = [],
+    ) {}
+
+    public static function forStatic(string $title, string $description, string $canonical, ?string $keywords = null, ?string $robots = null): self
+    {
+        return new self(
+            title: $title,
+            description: $description,
+            canonical: $canonical,
+            keywords: $keywords,
+            robots: $robots ?? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+        );
+    }
+
+    public static function forNoIndex(string $title, string $canonical): self
+    {
+        return new self(
+            title: $title,
+            description: $title,
+            canonical: $canonical,
+            robots: 'noindex, nofollow',
+        );
+    }
+
+    public static function forHome(): self
+    {
+        return new self(
+            title: 'INZRA — Premium High-Authority SEO Backlinks & Link Building Services',
+            description: 'INZRA: Curated marketplace for verified high-authority backlinks. Guest posts, niche edits, EDU/GOV links with guaranteed DA, DR metrics. 8,400+ publishers. Transparent pricing.',
+            canonical: url('/'),
+            ogImage: asset('og-cover.svg'),
+            jsonLd: [
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'LocalBusiness',
+                    '@id' => url('/'),
+                    'name' => 'INZRA',
+                    'description' => 'Verified marketplace for high-authority SEO backlinks and link building services.',
+                    'url' => url('/'),
+                    'image' => asset('og-cover.svg'),
+                    'sameAs' => ['https://twitter.com/inzra', 'https://linkedin.com/company/inzra'],
+                    'aggregateRating' => ['@type' => 'AggregateRating', 'ratingValue' => '4.9', 'reviewCount' => '2841', 'bestRating' => '5', 'worstRating' => '1'],
+                    'priceRange' => '$3-$280',
+                    'areaServed' => 'Worldwide',
+                ],
+                self::breadcrumb([['name' => 'Home', 'item' => url('/')]]),
+            ],
+        );
+    }
+
+    public static function forMarketplace($products): self
+    {
+        return new self(
+            title: 'Backlink Marketplace | 40+ Verified Placements | INZRA',
+            description: 'Browse 40+ verified backlink placements: guest posts, PBN links, niche edits, EDU/GOV links. DA 10-95. Real traffic metrics. Order directly via WhatsApp. INZRA marketplace.',
+            canonical: route('marketplace'),
+            jsonLd: [
+                self::breadcrumb([
+                    ['name' => 'Home', 'item' => url('/')],
+                    ['name' => 'Marketplace', 'item' => route('marketplace')],
+                ]),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'CollectionPage',
+                    'name' => 'INZRA Marketplace',
+                    'mainEntity' => [
+                        '@type' => 'ItemList',
+                        'itemListElement' => collect($products)->values()->map(fn ($product, $i) => [
+                            '@type' => 'ListItem',
+                            'position' => $i + 1,
+                            'url' => route('products.show', $product),
+                        ])->all(),
+                    ],
+                ],
+            ],
+        );
+    }
+
+    public static function forCategories($categories): self
+    {
+        return new self(
+            title: 'Backlink Types & Categories | Guest Posts, PBN, EDU, GOV | INZRA',
+            description: '8 backlink categories explained: guest posts, PBN links, niche edits, contextual, EDU, GOV, local citations, press releases. Filter by DA, traffic, language. INZRA.',
+            canonical: route('categories'),
+            jsonLd: [
+                self::breadcrumb([
+                    ['name' => 'Home', 'item' => url('/')],
+                    ['name' => 'Categories', 'item' => route('categories')],
+                ]),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'ItemList',
+                    'name' => 'Backlink Categories',
+                    'itemListElement' => collect($categories)->values()->map(fn ($category, $i) => [
+                        '@type' => 'ListItem',
+                        'position' => $i + 1,
+                        'item' => [
+                            '@type' => 'Thing',
+                            'name' => $category->name,
+                            'description' => $category->description,
+                        ],
+                    ])->all(),
+                ],
+            ],
+        );
+    }
+
+    public static function forPricing(): self
+    {
+        return new self(
+            title: 'SEO Packages & Generative Engine Optimization (GEO) | INZRA',
+            description: 'INZRA SEO & GEO packages: technical SEO, on-page optimization, high-authority backlinks, AI search visibility. Competitive pricing. 4.9/5 rating from 2,841+ customers.',
+            canonical: route('pricing'),
+            keywords: 'SEO packages, GEO packages, generative engine optimization, AI search optimization, technical SEO, on-page SEO, off-page SEO, link building packages, backlink packages',
+            jsonLd: [
+                self::breadcrumb([
+                    ['name' => 'Home', 'item' => url('/')],
+                    ['name' => 'Pricing', 'item' => route('pricing')],
+                ]),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'Service',
+                    'name' => 'SEO & GEO Packages',
+                    'provider' => ['@type' => 'Organization', 'name' => 'INZRA'],
+                    'hasOfferCatalog' => [
+                        '@type' => 'OfferCatalog',
+                        'name' => 'SEO & GEO Packages',
+                        'itemListElement' => [
+                            ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Backlinks Only', 'description' => '1,000 high-authority backlinks delivered every month — pure off-page link building volume.'], 'priceCurrency' => 'USD', 'price' => '100', 'priceSpecification' => ['@type' => 'UnitPriceSpecification', 'price' => '100', 'priceCurrency' => 'USD', 'billingDuration' => 'P1M']],
+                            ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => '10 Keyword Ranking Package', 'description' => 'A focused ranking campaign built around the 10 keywords that move your revenue.'], 'priceCurrency' => 'USD', 'price' => '200', 'priceSpecification' => ['@type' => 'UnitPriceSpecification', 'price' => '200', 'priceCurrency' => 'USD', 'billingDuration' => 'P1M']],
+                            ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => '20 Keyword Ranking + GEO Package', 'description' => 'Rank 20 keywords in Google while building the entity signals AI answer engines cite.'], 'priceCurrency' => 'USD', 'price' => '280', 'priceSpecification' => ['@type' => 'UnitPriceSpecification', 'price' => '280', 'priceCurrency' => 'USD', 'billingDuration' => 'P1M']],
+                        ],
+                    ],
+                ],
+            ],
+        );
+    }
+
+    public static function forBlogIndex(): self
+    {
+        return new self(
+            title: 'SEO & Link Building Blog | Authority Insights & Strategy | INZRA',
+            description: 'INZRA blog: SEO insights, link building strategy, backlink case studies, anchor text ratios. Learn from 4,000+ publisher conversations. Expert link building knowledge.',
+            canonical: route('blog.index'),
+            jsonLd: [
+                self::breadcrumb([
+                    ['name' => 'Home', 'item' => url('/')],
+                    ['name' => 'Blog', 'item' => route('blog.index')],
+                ]),
+            ],
+        );
+    }
+
+    public static function forContact(): self
+    {
+        return new self(
+            title: 'Contact INZRA | Support, FAQ & Publisher List',
+            description: 'Contact INZRA support. SEO FAQ, refund policy, link delivery issues. Subscribe to weekly publisher list. Expert support team. Response in 24 hours.',
+            canonical: route('contact'),
+            keywords: 'contact INZRA, backlink support, SEO FAQ, publisher list, refund policy, link building support, contact form',
+            jsonLd: [
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => [
+                        ['@type' => 'Question', 'name' => 'What payment methods do you accept?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => "We arrange orders and payment directly over WhatsApp — message us your requirements and we'll confirm pricing and details before you pay."]],
+                        ['@type' => 'Question', 'name' => 'What is your refund policy?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => "We offer a 30-day money-back guarantee on all backlink purchases. If you're not satisfied or your links don't deliver as promised, we'll refund you in full."]],
+                        ['@type' => 'Question', 'name' => 'How long does delivery take?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Most backlinks are delivered within 30 days. Some rush services are available for an additional fee with 7-14 day delivery windows.']],
+                        ['@type' => 'Question', 'name' => 'Are backlinks guaranteed to improve rankings?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'While we cannot guarantee ranking improvements (no SEO company can), our high-quality backlinks from verified sites with real traffic significantly improve your link profile and domain authority.']],
+                    ],
+                ],
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'Organization',
+                    '@id' => url('/'),
+                    'name' => 'INZRA',
+                    'url' => url('/'),
+                    'contactPoint' => [
+                        '@type' => 'ContactPoint',
+                        'contactType' => 'Customer Support',
+                        'email' => 'support@inzra.com',
+                        'availableLanguage' => ['en'],
+                    ],
+                ],
+                self::breadcrumb([
+                    ['name' => 'Home', 'item' => url('/')],
+                    ['name' => 'Contact', 'item' => route('contact')],
+                ]),
+            ],
+        );
+    }
+
+    public static function forProduct(Product $product): self
+    {
+        $title = "{$product->name} — \${$product->formatted_price} | INZRA";
+        $categoryName = $product->category?->name ?? 'Marketplace';
+
+        return new self(
+            title: $title,
+            description: $product->meta_description ?? $title,
+            canonical: route('products.show', $product),
+            ogType: 'product',
+            ogImage: $product->image_path ? asset($product->image_path) : asset('og-cover.svg'),
+            jsonLd: [
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'Product',
+                    'name' => $product->name,
+                    'description' => $product->meta_description,
+                    'sku' => $product->sku,
+                    'image' => $product->image_path ? asset($product->image_path) : null,
+                    'category' => $categoryName,
+                    'brand' => ['@type' => 'Brand', 'name' => 'INZRA'],
+                    'offers' => [
+                        '@type' => 'Offer',
+                        'url' => route('products.show', $product),
+                        'priceCurrency' => $product->currency,
+                        'price' => number_format((float) $product->price, 2, '.', ''),
+                        'availability' => 'https://schema.org/InStock',
+                        'itemCondition' => 'https://schema.org/NewCondition',
+                        'seller' => ['@type' => 'Organization', 'name' => 'INZRA'],
+                    ],
+                ],
+                self::breadcrumb([
+                    ['name' => 'Home', 'item' => url('/')],
+                    ['name' => 'Marketplace', 'item' => route('marketplace')],
+                    ['name' => $categoryName],
+                    ['name' => $product->name, 'item' => route('products.show', $product)],
+                ]),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => collect(config('inzra.pdp.faqs'))->map(fn ($faq) => [
+                        '@type' => 'Question',
+                        'name' => $faq['question'],
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+                    ])->all(),
+                ],
+            ],
+        );
+    }
+
+    public static function forBlogPost(BlogPost $post): self
+    {
+        $jsonLd = [
+            [
+                '@context' => 'https://schema.org',
+                '@type' => 'BlogPosting',
+                'headline' => $post->title,
+                'description' => $post->excerpt,
+                'image' => $post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg'),
+                'datePublished' => optional($post->published_at)->toDateString(),
+                'author' => ['@type' => 'Organization', 'name' => 'INZRA', 'url' => url('/')],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => 'INZRA',
+                    'logo' => ['@type' => 'ImageObject', 'url' => asset('favicon.svg')],
+                ],
+                'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => route('blog.show', $post)],
+                'articleSection' => $post->category,
+            ],
+            self::breadcrumb([
+                ['name' => 'Home', 'item' => url('/')],
+                ['name' => 'Blog', 'item' => route('blog.index')],
+                ['name' => $post->category],
+                ['name' => $post->title, 'item' => route('blog.show', $post)],
+            ]),
+        ];
+
+        if (! empty($post->faqs)) {
+            $jsonLd[] = [
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => collect($post->faqs)->map(fn ($faq) => [
+                    '@type' => 'Question',
+                    'name' => $faq['question'],
+                    'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+                ])->all(),
+            ];
+        }
+
+        return new self(
+            title: "{$post->title} | INZRA Blog",
+            description: $post->excerpt ?? $post->title,
+            canonical: route('blog.show', $post),
+            ogType: 'article',
+            ogImage: $post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg'),
+            jsonLd: $jsonLd,
+        );
+    }
+
+    private static function breadcrumb(array $items): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => collect($items)->values()->map(fn ($item, $i) => array_filter([
+                '@type' => 'ListItem',
+                'position' => $i + 1,
+                'name' => $item['name'],
+                'item' => $item['item'] ?? null,
+            ]))->all(),
+        ];
+    }
+}
