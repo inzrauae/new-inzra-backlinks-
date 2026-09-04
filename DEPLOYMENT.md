@@ -1,8 +1,14 @@
 # Deploying INZRA to cPanel — from an empty account to live
 
-This app deploys via cPanel's **Git Version Control** feature, which runs
-`.cpanel.yml` automatically whenever you deploy from a repository. The
-Laravel application lives **outside** the public webroot
+This app deploys via cPanel's **Git Version Control** feature, which is
+*supposed to* run `.cpanel.yml` automatically whenever you click "Deploy
+HEAD Commit". **On some hosts this hook never fires**, even with a
+correct `.cpanel.yml` — cPanel just does the git checkout and stops. If
+that happens to you, skip straight to **"Method B — manual deploy"**
+below and run the same steps yourself via Terminal; there's nothing wrong
+with your code in that case, just that particular automation.
+
+Either way, the Laravel application lives **outside** the public webroot
 (`/home/seoweb/inzra-app/`); `public_html/` only ever receives a copy of
 Laravel's `public/` folder — never the app source, `.env`, or `vendor/`.
 
@@ -108,14 +114,67 @@ Click **Create**. cPanel clones the repo.
 On the Git Version Control page, open the `inzra` repo → **Manage** →
 **Pull or Deploy** tab → **Deploy HEAD Commit**.
 
-This runs every task in `.cpanel.yml` end to end: rsyncs the app into
-`/home/seoweb/inzra-app/`, runs `composer install`, creates `.env` from
-`.env.example` (first time only), runs migrations, caches config/routes/
-views, and publishes `public/` into `public_html/`.
+This *should* run every task in `.cpanel.yml` end to end: rsyncs the app
+into `/home/seoweb/inzra-app/`, runs `composer install`, creates `.env`
+from `.env.example` (first time only), runs migrations, caches
+config/routes/views, and publishes `public/` into `public_html/`.
 
 **The very first deploy will partially fail** — `artisan migrate` needs a
 real database connection, which isn't configured yet. That's expected;
 continue to Part 3, then re-run **Deploy HEAD Commit** afterward.
+
+**Check it actually ran**: File Manager → confirm `/home/seoweb/inzra-app/`
+has files (not just `/home/seoweb/repo/`). If `inzra-app` is empty after
+clicking Deploy, your host isn't executing `.cpanel.yml` at all — this
+happens on some cPanel/WHM setups even with a correct file. Don't keep
+troubleshooting the button; use Method B below instead.
+
+### Method B — manual deploy via Terminal (use this if Method A's hook doesn't fire)
+
+Run these directly in cPanel → **Terminal**, replacing `seoweb` with your
+real username throughout:
+
+```bash
+# 1. Copy the app source out of the git clone into its own folder
+mkdir -p /home/seoweb/inzra-app
+rsync -av --delete \
+  --exclude=.git --exclude=.gitignore --exclude=.gitattributes --exclude=.cpanel.yml \
+  --exclude=.env --exclude=tests --exclude=legacy-static-reference --exclude=deploy \
+  --exclude=SEO_GEO_OPTIMIZATION.md --exclude=DEPLOYMENT.md \
+  --exclude='eBay-all-active-listings-report-*.csv' --exclude=public/build \
+  /home/seoweb/repo/ /home/seoweb/inzra-app/
+
+# 2. Create .env if it doesn't exist yet
+test -f /home/seoweb/inzra-app/.env || cp /home/seoweb/inzra-app/.env.example /home/seoweb/inzra-app/.env
+
+# 3. Install dependencies — the step most likely to fail on shared hosting; watch its output
+cd /home/seoweb/inzra-app
+/usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
+
+# 4. Generate the app key (only needed the first time, while APP_KEY is blank)
+php artisan key:generate
+```
+
+**Stop here and edit `.env`** (`nano .env`) with real DB credentials —
+see Part 3 below — before continuing:
+
+```bash
+# 5. Once .env has real DB credentials:
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan storage:link
+
+# 6. Publish the public assets to the actual webroot
+rsync -av --delete /home/seoweb/inzra-app/public/ /home/seoweb/public_html/
+cp /home/seoweb/inzra-app/deploy/public-index.php /home/seoweb/public_html/index.php
+chmod -R 775 /home/seoweb/inzra-app/storage /home/seoweb/inzra-app/bootstrap/cache
+```
+
+For every future update: `git pull` inside `/home/seoweb/repo` (or
+re-click "Update from Remote" in the Git Version Control UI), then re-run
+steps 1 and 3–6 above (skip step 4 — the key only needs generating once).
 
 ---
 
