@@ -1,4 +1,4 @@
-<x-app-layout :seo="$seo" active="image-converter">
+<x-app-layout :seo="$seo" active="tools">
 
 <section class="section" id="converter">
   <div class="container">
@@ -127,6 +127,48 @@
     <div class="pdp__body reveal">
       <h2>Supported image formats</h2>
       <p>You can upload JPG, PNG, WebP, GIF, BMP, and AVIF (where your browser can decode it). You can convert to JPG, PNG, or WebP in virtually any modern browser — AVIF is offered as an output format only when your specific browser supports encoding it, which today mainly means recent Chrome and Edge versions. The format dropdown only ever shows options your browser can actually produce.</p>
+    </div>
+
+    <div class="pdp__body reveal">
+      <h2>Which format should I use?</h2>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; margin-top:8px;">
+          <thead>
+            <tr style="text-align:left; border-bottom:1px solid var(--line);">
+              <th style="padding:10px 12px;">Format</th>
+              <th style="padding:10px 12px;">Best for</th>
+              <th style="padding:10px 12px;">Transparency</th>
+              <th style="padding:10px 12px;">Typical file size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:10px 12px;"><b>JPG</b></td>
+              <td style="padding:10px 12px;">Photos and complex images</td>
+              <td style="padding:10px 12px;">No</td>
+              <td style="padding:10px 12px;">Small — best for photos</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:10px 12px;"><b>PNG</b></td>
+              <td style="padding:10px 12px;">Logos, screenshots, graphics</td>
+              <td style="padding:10px 12px;">Yes</td>
+              <td style="padding:10px 12px;">Larger — lossless</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:10px 12px;"><b>WebP</b></td>
+              <td style="padding:10px 12px;">General web use</td>
+              <td style="padding:10px 12px;">Yes</td>
+              <td style="padding:10px 12px;">Smaller than JPG/PNG at similar quality</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px;"><b>AVIF</b></td>
+              <td style="padding:10px 12px;">Modern web, max compression</td>
+              <td style="padding:10px 12px;">Yes</td>
+              <td style="padding:10px 12px;">Smallest, but slower to encode and less universally supported</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="pdp__body reveal">

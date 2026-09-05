@@ -190,10 +190,29 @@ final readonly class SeoData
         );
     }
 
+    public static function forToolsIndex(): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Tools', 'item' => route('tools.index')],
+        ];
+
+        return new self(
+            title: 'Free SEO & Image Tools | INZRA',
+            description: 'Free browser-based tools from INZRA — starting with an online image converter. No sign-up, no uploads, nothing sent to a server.',
+            canonical: route('tools.index'),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+            ],
+        );
+    }
+
     public static function forImageConverter(): self
     {
         $breadcrumbItems = [
             ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Tools', 'item' => route('tools.index')],
             ['name' => 'Image Converter', 'item' => route('tools.image-converter')],
         ];
 
@@ -233,6 +252,18 @@ final readonly class SeoData
                         'name' => $faq['question'],
                         'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
                     ])->all(),
+                ],
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'HowTo',
+                    'name' => 'How to convert an image online',
+                    'step' => [
+                        ['@type' => 'HowToStep', 'position' => 1, 'name' => 'Upload', 'text' => 'Upload one or more images by dragging them in or clicking "Choose Images."'],
+                        ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Choose format', 'text' => 'Pick the output format you want from the dropdown.'],
+                        ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Adjust settings', 'text' => 'Adjust quality or resize dimensions if needed.'],
+                        ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Convert', 'text' => 'Click "Convert All."'],
+                        ['@type' => 'HowToStep', 'position' => 5, 'name' => 'Download', 'text' => 'Download each result individually, or all at once as a ZIP.'],
+                    ],
                 ],
             ],
         );

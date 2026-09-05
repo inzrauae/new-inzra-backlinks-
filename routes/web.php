@@ -37,6 +37,7 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/markets', [MarketController::class, 'index'])->name('markets.index');
 Route::get('/markets/{market}', [MarketController::class, 'show'])->name('markets.show');
 
+Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
 Route::get('/image-converter', [ToolController::class, 'imageConverter'])->name('tools.image-converter');
 
 Route::get('/pricing', fn () => view('pages.pricing', ['seo' => SeoData::forPricing()]))->name('pricing');
