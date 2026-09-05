@@ -2,15 +2,16 @@
 
 /*
 |--------------------------------------------------------------------------
-| Market guide pages
+| Market landing pages
 |--------------------------------------------------------------------------
 |
-| Each entry is a genuinely distinct page about link-building conditions in
-| that market — not a templated clone. Where INZRA has real inventory for a
-| market (Swedish, German), that's said honestly and linked; where it
-| doesn't yet, the copy says so plainly rather than implying coverage that
-| doesn't exist. Keep it that way when adding new markets: real content,
-| no invented stats or fabricated local presence.
+| Each entry drives a homepage-style landing page for that market. The
+| SECTIONS mirror the homepage (hero, why-this-market, inventory, process,
+| FAQ) but the content in every field below must be genuinely written for
+| that specific market — not a find-replace of the country name. Where
+| INZRA has real inventory for a market (Swedish, German), that's said
+| honestly and linked via related_product_slugs; where it doesn't yet, the
+| copy says so plainly. No invented stats, no fabricated local presence.
 |
 */
 
@@ -25,11 +26,14 @@ return [
         'eyebrow' => 'Netherlands',
         'h1' => 'Backlinks and SEO for the Dutch market',
         'intro' => "The Netherlands has some of the highest average marketing budgets in Europe, but most backlink vendors only operate in English. That leaves a real gap for anyone targeting Dutch-reading audiences directly — .nl domains, Dutch news sites and Dutch-language blogs that don't show up in a typical English-first vendor's inventory.",
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => "Strong budgets, but a genuinely small pool of vendors who can place real Dutch-language content. Most agencies either subcontract it out or publish translated English copy on a .nl domain — native Dutch readers notice immediately, and it rarely performs the way a locally-written piece does.",
-        'approach_heading' => 'What we can do here today',
-        'approach' => "We're extending our Swedish and German-language publisher relationships to Dutch. If you need Dutch guest posts or niche edits, get in touch and we'll scope a custom campaign — we'd rather tell you that plainly than sell you an English placement dressed up as local.",
         'link_types' => ['Guest posts', 'Niche edits', 'Digital PR'],
+        'why_heading' => 'Why the Dutch market is different',
+        'why_sub' => "Budgets here are strong. The pool of vendors who can genuinely deliver in Dutch is not.",
+        'why_points' => [
+            ['icon' => 'fa-solid fa-language', 'title' => 'A real Dutch-language moat', 'text' => 'Most vendors only operate in English, leaving Dutch-reading audiences underserved despite high local marketing budgets.'],
+            ['icon' => 'fa-solid fa-user-check', 'title' => 'Native content or nothing', 'text' => "Translated English copy on a .nl domain reads as obviously foreign — we won't sell that to you as \"local.\""],
+            ['icon' => 'fa-solid fa-arrow-trend-up', 'title' => 'An expanding network, told honestly', 'text' => "We're building Dutch publisher relationships now. Tell us your target keywords and we'll scope a real campaign, not a placeholder."],
+        ],
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Do you have real Dutch-language publishers today?', 'answer' => "We're actively building this network. Today we can scope a custom campaign for you rather than sell an English placement labelled as Dutch — talk to us about your specific target keywords and timeline."],
@@ -46,11 +50,14 @@ return [
         'eyebrow' => 'Nordics',
         'h1' => 'Backlinks and SEO for Sweden, Norway & Denmark',
         'intro' => 'iGaming and affiliate marketing move enormous budgets across Sweden, Norway and Denmark, yet very few backlink vendors have a real presence in any of the three languages.',
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => 'Swedish, Norwegian and Danish read similarly enough that an English-only campaign stands out immediately to a Nordic audience — and Nordic publishers know it. Affiliate-heavy niches especially reward genuine local-language placements over anything translated.',
-        'approach_heading' => 'What we can do here today',
-        'approach' => 'We already place real Swedish-language backlinks — see the current listing below — and are extending the same approach to Norwegian and Danish publishers. Norway and Denmark campaigns are scoped individually today rather than sold off a fixed catalog.',
         'link_types' => ['Guest posts', 'Niche edits', 'Contextual links'],
+        'why_heading' => 'Why the Nordic market is different',
+        'why_sub' => 'Three languages, one region most vendors treat as English-only.',
+        'why_points' => [
+            ['icon' => 'fa-solid fa-money-bill-wave', 'title' => 'iGaming and affiliate money', 'text' => 'Sweden, Norway and Denmark move enormous affiliate budgets, and local-language placements convert meaningfully better than English ones.'],
+            ['icon' => 'fa-solid fa-circle-check', 'title' => 'Real Swedish inventory today', 'text' => 'See the Swedish listing below — a live product in our marketplace, not a promise.'],
+            ['icon' => 'fa-solid fa-arrow-trend-up', 'title' => 'Norway & Denmark, scoped individually', 'text' => "No fixed catalog yet for Norwegian or Danish — contact us and we'll build a campaign around your specific goals."],
+        ],
         'related_product_slugs' => ['premium-svenska-backlinks-500-hogkvalitativa-lankar'],
         'faqs' => [
             ['question' => 'Do you have real Swedish inventory, or is this just marketing copy?', 'answer' => 'Real — see the linked listing on this page. It\'s an actual product in our marketplace, not a placeholder.'],
@@ -67,11 +74,14 @@ return [
         'eyebrow' => 'Israel',
         'h1' => 'Backlinks and SEO for the Israeli market',
         'intro' => 'Forex, crypto and affiliate marketing are three of the biggest verticals in Israeli digital marketing, and Hebrew is a genuine language barrier for most international backlink vendors.',
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => "Hebrew reads right-to-left, and most link-building vendors simply don't have writers or publisher relationships in the language. That pushes English-only campaigns to underperform specifically in the finance and crypto niches where Israeli budgets are largest.",
-        'approach_heading' => 'What we can do here today',
-        'approach' => "We currently support Israeli campaigns through English-language guest posts and PR placements aimed at international audiences. A dedicated Hebrew publisher network is on our roadmap, not live yet — get in touch if Hebrew-language placement is a hard requirement and we'll tell you honestly whether we can help.",
         'link_types' => ['Guest posts', 'Digital PR', 'Contextual links'],
+        'why_heading' => 'Why the Israeli market is different',
+        'why_sub' => 'High-value verticals, a real language barrier most vendors ignore.',
+        'why_points' => [
+            ['icon' => 'fa-solid fa-chart-line', 'title' => 'Forex, crypto & affiliate heavy', 'text' => "Three of Israel's biggest digital verticals, where local-language trust signals matter most."],
+            ['icon' => 'fa-solid fa-language', 'title' => 'Hebrew is a genuine barrier', 'text' => 'Most vendors have no Hebrew writers or publisher relationships at all — English-only campaigns underperform here.'],
+            ['icon' => 'fa-solid fa-circle-info', 'title' => "Honest about today's limits", 'text' => 'We currently support English-language guest posts and PR aimed at international audiences; Hebrew placement is on our roadmap, not live yet.'],
+        ],
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Can you place Hebrew-language content?', 'answer' => "Not yet as a standing service — it's on our roadmap. We can discuss a custom scope if you have a specific need."],
@@ -88,11 +98,14 @@ return [
         'eyebrow' => 'UAE & Saudi Arabia',
         'h1' => 'Backlinks and SEO for the UAE & Saudi market',
         'intro' => "INZRA is based in Dubai, so the UAE and Saudi market isn't a new region for us — it's home turf.",
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => "Arabic-language SEO is still badly underserved relative to the budgets moving through Gulf digital marketing right now. Most international link-building vendors offer English-only placements into a market where Arabic-first content converts meaningfully better.",
-        'approach_heading' => 'What we can do here today',
-        'approach' => "Being Dubai-based gives us a direct read on what Gulf buyers and publishers actually expect: direct relationships, fast turnaround, and content that doesn't read like a translation. Get in touch to scope an Arabic or bilingual campaign.",
         'link_types' => ['Guest posts', 'Digital PR', 'Local citations'],
+        'why_heading' => 'Why the Gulf market is different',
+        'why_sub' => 'Big budgets, and a market we actually operate in day to day.',
+        'why_points' => [
+            ['icon' => 'fa-solid fa-location-dot', 'title' => 'Our actual home market', 'text' => "INZRA is Dubai-based — this isn't a new region for us, it's where we operate day to day."],
+            ['icon' => 'fa-solid fa-language', 'title' => 'Arabic SEO, badly underserved', 'text' => 'Big Gulf budgets are still mostly served English-only, while Arabic-first content converts meaningfully better.'],
+            ['icon' => 'fa-solid fa-bolt', 'title' => 'Direct relationships, fast turnaround', 'text' => "Being on the ground means real publisher relationships and content that doesn't read like a translation."],
+        ],
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Is INZRA actually based in the UAE, or is this just a marketing angle?', 'answer' => "Yes — INZRA is a real, Dubai-registered business. It's not a claim we're making up for this page."],
@@ -109,11 +122,14 @@ return [
         'eyebrow' => 'Japan',
         'h1' => 'Backlinks and SEO for the Japanese market',
         'intro' => "Japan has some of the largest digital marketing budgets in Asia and almost no foreign backlink vendors competing for them — but that's because entering the market is genuinely hard, not because the opportunity is small.",
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => 'Japanese publishers are typically slow to trust vendors without a local presence or a direct introduction, and content quality expectations are high. That keeps most international link builders out entirely, rather than just some of them.',
-        'approach_heading' => 'What we can do here today',
-        'approach' => "We don't currently have an active Japanese publisher network, and we'd rather say that directly than oversell it. If you have a specific Japan campaign in mind, contact us — we'll be upfront about what's realistic now versus what would take real lead time to build properly.",
         'link_types' => ['Digital PR', 'Guest posts'],
+        'why_heading' => 'Why the Japanese market is different',
+        'why_sub' => 'A real opportunity, and a real barrier to entry — we won\'t pretend otherwise.',
+        'why_points' => [
+            ['icon' => 'fa-solid fa-yen-sign', 'title' => 'Large budgets, thin foreign competition', 'text' => "Japan has some of Asia's biggest digital budgets and almost no foreign link-building vendors competing for them."],
+            ['icon' => 'fa-solid fa-lock', 'title' => 'Trust is the real barrier', 'text' => 'Japanese publishers are typically slow to work with vendors that lack a local presence or a direct introduction.'],
+            ['icon' => 'fa-solid fa-circle-info', 'title' => 'No active network yet — said plainly', 'text' => "We'd rather tell you that directly than oversell it. Contact us and we'll be upfront about what's realistic today."],
+        ],
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Do you have Japanese publishers today?', 'answer' => 'No, not as an active network — this page exists to be honest about that rather than imply coverage we don\'t have.'],
@@ -130,11 +146,14 @@ return [
         'eyebrow' => 'South Korea',
         'h1' => 'Backlinks and SEO for the Korean market',
         'intro' => "Korea shares Japan's combination of large budgets and thin foreign competition, with a slightly lower barrier to entry for vendors willing to invest in the relationships.",
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => "Naver, not Google, dominates Korean search behaviour, which changes what \"SEO\" even means locally. Link building alone won't move the needle the way it does elsewhere without a Naver-specific strategy running alongside it.",
-        'approach_heading' => 'What we can do here today',
-        'approach' => "This is an emerging market for us, not an active one yet. We'll say so plainly if you reach out — happy to talk through what a real Korean campaign would need, including the Naver-specific pieces a generic international vendor usually ignores.",
         'link_types' => ['Digital PR', 'Guest posts'],
+        'why_heading' => 'Why the Korean market is different',
+        'why_sub' => "It's not just Google — and most vendors miss that entirely.",
+        'why_points' => [
+            ['icon' => 'fa-solid fa-magnifying-glass', 'title' => 'Naver, not just Google', 'text' => 'Korean search behaviour runs through Naver as much as Google, which changes what "SEO" even means locally.'],
+            ['icon' => 'fa-solid fa-won-sign', 'title' => 'Large budgets, low competition', 'text' => 'Similar opportunity profile to Japan, with a somewhat lower barrier to entry for vendors willing to invest.'],
+            ['icon' => 'fa-solid fa-circle-info', 'title' => 'An emerging market for us, not an active one', 'text' => "We'll say so plainly if you reach out, and can talk through what a real Korean campaign needs."],
+        ],
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Can INZRA help with Naver specifically?', 'answer' => "Not as a packaged service today. It's a genuinely different discipline from Google SEO, and we'd want to scope it properly with you rather than bolt it onto a standard link-building package."],
@@ -150,11 +169,14 @@ return [
         'eyebrow' => 'Central Europe',
         'h1' => 'Backlinks and SEO for Czechia, Hungary & Romania',
         'intro' => 'SEO spend across Czechia, Hungary and Romania has been climbing steadily, while the number of vendors who can genuinely place content in Czech, Hungarian or Romanian has not kept pace.',
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => "Three different languages, three different publisher landscapes. Most vendors covering \"Eastern Europe\" as one bucket are quietly running English content across all three, which reads as obviously foreign to local audiences.",
-        'approach_heading' => 'What we can do here today',
-        'approach' => "We treat each of these as a separate language market rather than one region. If you need Czech, Hungarian or Romanian specifically, tell us which — we'll scope that language's campaign on its own rather than bundle it into a generic package.",
         'link_types' => ['Guest posts', 'Niche edits', 'Contextual links'],
+        'why_heading' => 'Why this market is different',
+        'why_sub' => 'Three languages, three publisher landscapes — not one region.',
+        'why_points' => [
+            ['icon' => 'fa-solid fa-arrow-trend-up', 'title' => 'Growing SEO spend', 'text' => "Spend across Czechia, Hungary and Romania has climbed steadily while vendor supply hasn't kept pace."],
+            ['icon' => 'fa-solid fa-language', 'title' => 'Three languages, not one region', 'text' => 'Most vendors covering "Eastern Europe" quietly run English content across all three — obviously foreign to local readers.'],
+            ['icon' => 'fa-solid fa-list-check', 'title' => 'Scoped separately, by language', 'text' => "Tell us which of the three you need — we won't bundle it into one generic package."],
+        ],
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Is this one package covering all three countries?', 'answer' => "No — we scope Czech, Hungarian and Romanian campaigns separately, since they're different languages and different publisher networks."],
@@ -170,11 +192,14 @@ return [
         'eyebrow' => 'Switzerland & Austria',
         'h1' => 'Backlinks and SEO for Switzerland & Austria',
         'intro' => 'Switzerland and Austria have the highest average per-link prices in Europe, and both are effectively part of the German-language SEO world — which is where we already have real inventory.',
-        'landscape_heading' => 'Why this market is different',
-        'landscape' => 'German-language content works across Germany, Austria and German-speaking Switzerland with only minor localisation, which is a real advantage over markets that need a genuinely separate language track built from nothing.',
-        'approach_heading' => 'What we can do here today',
-        'approach' => 'Our existing German-language backlinks — see the current listings below — are directly relevant here. The same publishers and content approach that work for a German buyer generally work for an Austrian or Swiss-German one too, with light localisation on request.',
         'link_types' => ['Guest posts', 'Niche edits', 'Contextual links'],
+        'why_heading' => 'Why this market is different',
+        'why_sub' => 'Premium pricing, and a language advantage we already have.',
+        'why_points' => [
+            ['icon' => 'fa-solid fa-coins', 'title' => 'Highest per-link prices in Europe', 'text' => 'Switzerland and Austria command premium pricing for genuine local placements.'],
+            ['icon' => 'fa-solid fa-circle-check', 'title' => 'Real German-language inventory today', 'text' => 'See the current listings below — the same publishers and approach that work for German buyers work here too.'],
+            ['icon' => 'fa-solid fa-language', 'title' => 'Light localisation on request', 'text' => 'Swiss-German spelling and terminology available on request where it matters for your campaign.'],
+        ],
         'related_product_slugs' => [
             '500-deutsche-backlinks-backlinks-kaufen-seo-link',
             '80-german-backlinks-dofollow-by-top-level-domain',

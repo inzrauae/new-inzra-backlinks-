@@ -1138,6 +1138,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   margin-bottom: 22px;
 }
 .pdp__crumb ol { display: flex; align-items: center; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
+.hero .pdp__crumb ol { justify-content: center; }
+.hero .pdp__crumb { margin-bottom: 18px; }
 .pdp__crumb li { display: inline-flex; align-items: center; }
 .pdp__crumb a { color: var(--muted); }
 .pdp__crumb a:hover { color: var(--blue); }
