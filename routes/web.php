@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/delivery', [OrderController::class, 'downloadDelivery'])->name('orders.delivery');
 
     Route::get('/buy/{product:slug}', [OrderController::class, 'store'])->name('orders.store');
 

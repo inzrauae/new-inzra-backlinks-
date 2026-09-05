@@ -59,6 +59,24 @@
       </table>
     </div>
 
+    @if ($order->delivery_url || $order->delivery_file_path)
+      <div class="auth-card glass reveal" style="margin-bottom:24px;">
+        <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:16px;">Delivery</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          @if ($order->delivery_url)
+            <a href="{{ $order->delivery_url }}" target="_blank" rel="noopener" class="btn btn--primary ripple">
+              <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> View delivery
+            </a>
+          @endif
+          @if ($order->delivery_file_path)
+            <a href="{{ route('orders.delivery', $order) }}" class="btn btn--glass ripple">
+              <i class="fa-solid fa-download" aria-hidden="true"></i> Download {{ $order->delivery_file_name }}
+            </a>
+          @endif
+        </div>
+      </div>
+    @endif
+
     @if ($order->whatsapp_message)
       <div class="auth-card glass reveal">
         <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:12px;">WhatsApp message sent</h3>

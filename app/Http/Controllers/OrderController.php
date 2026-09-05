@@ -12,7 +12,9 @@ use App\Support\WhatsAppMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OrderController extends Controller
 {
@@ -36,6 +38,15 @@ class OrderController extends Controller
             'seo' => SeoData::forNoIndex("Order {$order->order_number} | INZRA", route('orders.show', $order)),
             'order' => $order,
         ]);
+    }
+
+    public function downloadDelivery(Order $order): StreamedResponse
+    {
+        Gate::authorize('view', $order);
+
+        abort_unless($order->delivery_file_path && Storage::disk('local')->exists($order->delivery_file_path), 404);
+
+        return Storage::disk('local')->download($order->delivery_file_path, $order->delivery_file_name ?: 'delivery');
     }
 
     public function store(StoreOrderRequest $request, Product $product, CreatePendingOrder $createPendingOrder): RedirectResponse

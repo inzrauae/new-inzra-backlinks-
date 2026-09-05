@@ -59,7 +59,7 @@
     <div class="auth-card glass reveal">
       <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:16px;">Update order</h3>
 
-      <form method="POST" action="{{ route('admin.orders.update', $order) }}">
+      <form method="POST" action="{{ route('admin.orders.update', $order) }}" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -84,6 +84,30 @@
         <div class="auth-group">
           <label for="admin_note" class="auth-label">Admin note (included in the customer's email)</label>
           <textarea id="admin_note" name="admin_note" class="auth-input" rows="3">{{ old('admin_note', $order->admin_note) }}</textarea>
+        </div>
+
+        <div class="auth-group">
+          <label for="delivery_url" class="auth-label">Delivery link <span style="font-weight:400; color:var(--text-2);">(optional — the live URL, a report link, etc.)</span></label>
+          <input type="url" id="delivery_url" name="delivery_url" class="auth-input @error('delivery_url') has-error @enderror" value="{{ old('delivery_url', $order->delivery_url) }}" placeholder="https://example.com/the-live-post">
+          @error('delivery_url')
+            <p class="auth-error">{{ $message }}</p>
+          @enderror
+        </div>
+
+        <div class="auth-group">
+          <label for="delivery_file" class="auth-label">Delivery file <span style="font-weight:400; color:var(--text-2);">(optional — screenshot, PDF report, etc. Max 10MB)</span></label>
+          @if ($order->delivery_file_path)
+            <p style="font-size:.85rem; color:var(--text-2); margin-bottom:8px;">
+              Current file: <a href="{{ route('orders.delivery', $order) }}" class="auth-link">{{ $order->delivery_file_name }}</a>
+            </p>
+            <label style="display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--text-2); margin-bottom:8px;">
+              <input type="checkbox" name="remove_delivery_file" value="1"> Remove this file
+            </label>
+          @endif
+          <input type="file" id="delivery_file" name="delivery_file" class="auth-input @error('delivery_file') has-error @enderror">
+          @error('delivery_file')
+            <p class="auth-error">{{ $message }}</p>
+          @enderror
         </div>
 
         <button type="submit" class="btn btn--primary ripple">Save changes</button>

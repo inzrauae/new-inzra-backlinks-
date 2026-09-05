@@ -34,6 +34,9 @@ class Order extends Model
         'notes',
         'whatsapp_message',
         'admin_note',
+        'delivery_url',
+        'delivery_file_path',
+        'delivery_file_name',
     ];
 
     protected function casts(): array

@@ -12,6 +12,7 @@ use App\Support\SeoData;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -55,7 +56,25 @@ class OrderController extends Controller
 
     public function update(UpdateOrderRequest $request, Order $order): RedirectResponse
     {
-        $order->update($request->validated());
+        $data = collect($request->validated())->except(['delivery_file', 'remove_delivery_file'])->all();
+
+        if ($request->boolean('remove_delivery_file') && $order->delivery_file_path) {
+            Storage::disk('local')->delete($order->delivery_file_path);
+            $data['delivery_file_path'] = null;
+            $data['delivery_file_name'] = null;
+        }
+
+        if ($request->hasFile('delivery_file')) {
+            if ($order->delivery_file_path) {
+                Storage::disk('local')->delete($order->delivery_file_path);
+            }
+
+            $file = $request->file('delivery_file');
+            $data['delivery_file_path'] = $file->store('deliveries', 'local');
+            $data['delivery_file_name'] = $file->getClientOriginalName();
+        }
+
+        $order->update($data);
 
         Mail::to($order->customer_email)->send(new OrderStatusChanged($order));
 
