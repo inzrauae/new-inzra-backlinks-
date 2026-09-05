@@ -2314,6 +2314,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ============================================================
    19. IMAGE CONVERTER TOOL
    ============================================================ */
+#converter > .container > .section__head {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+#converter > .container > .section__head .tag-list { justify-content: center; }
+
 .conv-noscript {
   padding: 16px 20px;
   border-radius: var(--r-md);
