@@ -24,6 +24,14 @@ class ToolController extends Controller
         ]);
     }
 
+    public function pdfEditor()
+    {
+        return view('pages.tools.pdf-editor', [
+            'seo' => SeoData::forPdfEditor(),
+            'products' => $this->crossPromoProducts(),
+        ]);
+    }
+
     private function crossPromoProducts()
     {
         $slugs = array_slice(config('inzra.featured_product_slugs'), 0, 4);

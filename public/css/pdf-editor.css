@@ -1,0 +1,233 @@
+/* ============================================================
+   INZRA — Online PDF Editor
+   ------------------------------------------------------------
+   Scoped app shell styles. Everything nests under #pdfApp so this
+   file can be loaded only on /pdf-editor without touching the
+   rest of the site. Uses the same design tokens as style.css.
+   ============================================================ */
+
+#pdfApp {
+  --pe-toolbar-h: 52px;
+  --pe-menubar-h: 40px;
+  --pe-status-h: 34px;
+  --pe-panel-w: 268px;
+  --pe-thumb-w: 168px;
+
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-md);
+  overflow: hidden;
+  height: 82vh;
+  min-height: 560px;
+}
+
+#pdfApp * { box-sizing: border-box; }
+
+.pe-drop[hidden] { display: none; }
+.pe-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  border: 2px dashed var(--line);
+  margin: 14px;
+  border-radius: var(--r-md);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.pe-drop.is-dragover { border-color: var(--blue); background: var(--grad-soft); }
+.pe-drop__icon { font-size: 42px; color: var(--blue); }
+.pe-drop__title { font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin: 0; }
+.pe-drop__sub { color: var(--muted); margin: 0; font-size: .92rem; }
+
+/* ---------- menu bar ---------- */
+.pe-menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: var(--pe-menubar-h);
+  padding: 0 8px;
+  background: var(--bg-tint);
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
+  position: relative;
+}
+.pe-menu { position: relative; }
+.pe-menu__btn {
+  background: none; border: none; cursor: pointer;
+  font: inherit; font-size: .86rem; color: var(--text-2);
+  padding: 6px 10px; border-radius: var(--r-sm);
+}
+.pe-menu__btn:hover, .pe-menu.is-open .pe-menu__btn { background: var(--glass-strong); color: var(--text); }
+.pe-menu__list {
+  position: absolute; top: 100%; left: 0; z-index: 40;
+  min-width: 220px; margin-top: 4px; padding: 6px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); box-shadow: var(--sh-lg);
+  display: none;
+}
+.pe-menu.is-open .pe-menu__list { display: block; }
+.pe-menu__item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; background: none; border: none; text-align: left; cursor: pointer;
+  font: inherit; font-size: .86rem; color: var(--text-2);
+  padding: 8px 10px; border-radius: var(--r-sm);
+}
+.pe-menu__item:hover:not(:disabled) { background: var(--bg-tint); color: var(--text); }
+.pe-menu__item:disabled { opacity: .4; cursor: not-allowed; }
+.pe-menu__item kbd { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+.pe-menu__sep { height: 1px; background: var(--line); margin: 6px 2px; }
+.pe-menubar__spacer { flex: 1; }
+.pe-menubar__brand { font-size: .8rem; color: var(--muted); padding: 0 8px; white-space: nowrap; }
+
+/* ---------- main toolbar ---------- */
+.pe-toolbar {
+  display: flex; align-items: center; gap: 4px;
+  height: var(--pe-toolbar-h); padding: 0 10px;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+  flex: 0 0 auto; overflow-x: auto;
+}
+.pe-tool {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 1px solid transparent; cursor: pointer;
+  font: inherit; font-size: .82rem; color: var(--text-2);
+  padding: 7px 10px; border-radius: var(--r-sm); white-space: nowrap;
+}
+.pe-tool i { font-size: .95rem; }
+.pe-tool:hover { background: var(--bg-tint); color: var(--text); }
+.pe-tool.is-active { background: var(--grad-soft); border-color: rgba(37,99,235,.35); color: var(--blue); }
+.pe-tool:disabled { opacity: .35; cursor: not-allowed; }
+.pe-toolbar__sep { width: 1px; align-self: stretch; margin: 8px 4px; background: var(--line); flex: 0 0 auto; }
+.pe-toolbar__spacer { flex: 1; }
+
+/* ---------- body: thumbnails | canvas | properties ---------- */
+.pe-body { flex: 1; display: flex; min-height: 0; }
+
+.pe-thumbs {
+  width: var(--pe-thumb-w); flex: 0 0 auto; overflow-y: auto;
+  background: var(--bg-tint); border-right: 1px solid var(--line);
+  padding: 10px; display: flex; flex-direction: column; gap: 10px;
+}
+.pe-thumb {
+  position: relative; background: var(--surface); border: 2px solid transparent;
+  border-radius: var(--r-sm); cursor: grab; padding: 6px; text-align: center;
+  box-shadow: var(--sh-xs);
+}
+.pe-thumb.is-active { border-color: var(--blue); }
+.pe-thumb.is-dragging { opacity: .5; }
+.pe-thumb canvas { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 4px; }
+.pe-thumb__num { font-size: .74rem; color: var(--muted); margin-top: 4px; }
+.pe-thumb__menu { position: absolute; top: 4px; right: 4px; background: var(--glass-strong); border: none; border-radius: 6px; width: 22px; height: 22px; cursor: pointer; font-size: .8rem; color: var(--text-2); }
+.pe-thumb__scanned { position: absolute; bottom: 4px; left: 4px; background: rgba(234,179,8,.9); color: #1a1400; font-size: .62rem; font-weight: 700; padding: 1px 5px; border-radius: 4px; }
+
+.pe-canvas-wrap {
+  flex: 1; overflow: auto; position: relative;
+  background: repeating-linear-gradient(45deg, var(--bg) 0 10px, var(--bg-tint) 10px 20px);
+  display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 28px 0 60px;
+}
+.pe-page {
+  position: relative; background: #fff; box-shadow: var(--sh-md);
+  flex: 0 0 auto;
+}
+.pe-page canvas { display: block; }
+.pe-page__overlay { position: absolute; inset: 0; }
+.pe-page__scan-banner {
+  position: absolute; top: 8px; left: 8px; right: 8px; z-index: 5;
+  background: rgba(234,179,8,.95); color: #1a1400; font-size: .78rem;
+  padding: 6px 10px; border-radius: var(--r-sm); box-shadow: var(--sh-sm);
+}
+
+.pe-text-obj {
+  position: absolute; cursor: text; outline: none;
+  white-space: pre; transform-origin: left top;
+}
+.pe-text-obj.is-selected { outline: 1.5px dashed var(--blue); outline-offset: 1px; }
+.pe-obj {
+  position: absolute; cursor: move;
+}
+.pe-obj.is-selected { outline: 1.5px solid var(--blue); outline-offset: 2px; }
+.pe-obj__handle {
+  position: absolute; width: 9px; height: 9px; background: #fff;
+  border: 1.5px solid var(--blue); border-radius: 2px; z-index: 2;
+}
+.pe-obj__handle--nw { top: -5px; left: -5px; cursor: nwse-resize; }
+.pe-obj__handle--ne { top: -5px; right: -5px; cursor: nesw-resize; }
+.pe-obj__handle--sw { bottom: -5px; left: -5px; cursor: nesw-resize; }
+.pe-obj__handle--se { bottom: -5px; right: -5px; cursor: nwse-resize; }
+
+.pe-panel {
+  width: var(--pe-panel-w); flex: 0 0 auto; overflow-y: auto;
+  background: var(--surface); border-left: 1px solid var(--line);
+  padding: 14px;
+}
+.pe-panel h4 { margin: 0 0 10px; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.pe-panel__empty { color: var(--muted); font-size: .86rem; }
+.pe-field { margin-bottom: 12px; }
+.pe-field label { display: block; font-size: .78rem; color: var(--muted); margin-bottom: 4px; }
+.pe-field input[type="text"], .pe-field input[type="number"], .pe-field select, .pe-field textarea {
+  width: 100%; font: inherit; font-size: .86rem; padding: 6px 8px;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg);
+}
+.pe-field-row { display: flex; gap: 8px; }
+.pe-field-row > .pe-field { flex: 1; }
+.pe-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
+.pe-swatch { width: 22px; height: 22px; border-radius: 5px; border: 1px solid var(--line); cursor: pointer; }
+.pe-swatch.is-selected { outline: 2px solid var(--blue); outline-offset: 1px; }
+.pe-badge { display: inline-block; font-size: .72rem; padding: 2px 7px; border-radius: var(--r-full); font-weight: 600; }
+.pe-badge--exact { background: rgba(34,197,94,.15); color: #15803d; }
+.pe-badge--approx { background: rgba(234,179,8,.18); color: #a16207; }
+.pe-btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+
+/* ---------- status bar ---------- */
+.pe-status {
+  display: flex; align-items: center; gap: 16px;
+  height: var(--pe-status-h); padding: 0 14px;
+  background: var(--bg-tint); border-top: 1px solid var(--line);
+  font-size: .78rem; color: var(--muted); flex: 0 0 auto;
+}
+.pe-status__zoom { display: flex; align-items: center; gap: 6px; }
+.pe-status__zoom select { font: inherit; font-size: .78rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.pe-status__spacer { flex: 1; }
+.pe-status__save { display: flex; align-items: center; gap: 6px; }
+.pe-status__save i { color: var(--green); }
+
+/* ---------- modals / dialogs ---------- */
+.pe-modal-backdrop {
+  position: fixed; inset: 0; background: rgba(15,23,42,.5); z-index: 200;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.pe-modal {
+  background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--sh-lg);
+  max-width: 480px; width: 100%; padding: 22px; max-height: 86vh; overflow-y: auto;
+}
+.pe-modal h3 { margin-top: 0; }
+.pe-modal__actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+
+.pe-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: #fff; padding: 10px 18px; border-radius: var(--r-full);
+  font-size: .86rem; box-shadow: var(--sh-lg); z-index: 300; opacity: 0; transition: opacity var(--t-fast);
+}
+.pe-toast.is-visible { opacity: 1; }
+.pe-toast.is-error { background: #B91C1C; }
+
+.pe-signature-pad canvas { width: 100%; height: 180px; border: 1px solid var(--line); border-radius: var(--r-sm); background: #fff; touch-action: none; }
+.pe-sig-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+.pe-sig-tabs button { flex: 1; }
+
+/* ---------- mobile ---------- */
+@media (max-width: 900px) {
+  #pdfApp { height: 88vh; }
+  .pe-thumbs { display: none; }
+  .pe-panel { position: fixed; inset: auto 0 0 0; z-index: 50; max-height: 60vh; border-left: none; border-top: 1px solid var(--line); border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: var(--sh-lg); display: none; }
+  .pe-panel.is-open { display: block; }
+  .pe-menubar__brand { display: none; }
+  .pe-toolbar { position: sticky; bottom: 0; order: 3; border-top: 1px solid var(--line); border-bottom: none; background: var(--surface); }
+  .pe-body { order: 2; flex-direction: column; }
+}

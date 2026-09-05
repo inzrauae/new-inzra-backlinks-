@@ -270,6 +270,68 @@ final readonly class SeoData
         );
     }
 
+    public static function forPdfEditor(): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Tools', 'item' => route('tools.index')],
+            ['name' => 'PDF Editor', 'item' => route('tools.pdf-editor')],
+        ];
+
+        $faqs = [
+            ['question' => 'Is this PDF editor really free?', 'answer' => 'Yes, completely free with no sign-up required.'],
+            ['question' => 'Is my PDF uploaded to a server?', 'answer' => 'No. Your PDF is opened, edited and exported entirely in your browser using JavaScript. The file never leaves your device — there is no upload step at all.'],
+            ['question' => 'Can I edit existing text in a PDF?', 'answer' => "Yes. Click any text to edit it. The editor detects the original size, color and position, and picks the closest matching standard font, adjusting spacing so the text still fits — it's a close visual match, not always byte-for-byte identical to the original font."],
+            ['question' => 'Will editing preserve the original font exactly?', 'answer' => "Not exactly — this editor matches your PDF's font to the closest standard font available (by weight, style and width) rather than re-using the original font file, and always labels a match as approximate rather than claiming it's exact."],
+            ['question' => 'Can I edit scanned or image-only PDFs?', 'answer' => "The editor detects scanned pages and lets you know text editing isn't available on them yet. You can still add new text, images, annotations and signatures on top of a scanned page."],
+            ['question' => 'Can I merge or split PDFs?', 'answer' => 'Yes — import additional PDFs to merge their pages in, or extract/export selected pages as a new file, all locally in your browser.'],
+            ['question' => 'Can I fill out PDF forms?', 'answer' => 'Yes, existing fillable form fields (text, checkbox, radio, dropdown) are detected and can be filled in, with an option to flatten the form into the final PDF.'],
+            ['question' => 'Does true redaction actually remove the content?', 'answer' => "Yes for the redaction tool: it removes the underlying text/graphics from the exported PDF rather than just covering it, falling back to flattening the page to an image on pages too complex to safely edit. The separate whiteout tool only visually covers content and is labeled as such — use redaction, not whiteout, when removal matters."],
+            ['question' => 'Can I password-protect or encrypt the PDF I export?', 'answer' => "Not yet — there's no reliable way to add standard PDF encryption entirely in the browser today, so this editor doesn't offer it rather than faking it. You can still open PDFs that are already password protected."],
+        ];
+
+        return new self(
+            title: 'Free Online PDF Editor – Edit, Sign, Merge & Organize PDFs | INZRA',
+            description: 'Free online PDF editor that runs entirely in your browser. Edit text, add images and signatures, merge and split pages, fill forms, and redact — no sign-up, no uploads, no server processing.',
+            canonical: route('tools.pdf-editor'),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'WebApplication',
+                    'name' => 'INZRA Free Online PDF Editor',
+                    'description' => 'Free tool to edit, sign, merge, split and organize PDF files directly in your browser. No uploads, no account, no sign-up required.',
+                    'url' => route('tools.pdf-editor'),
+                    'applicationCategory' => 'BusinessApplication',
+                    'operatingSystem' => 'Any (runs in a web browser)',
+                    'isAccessibleForFree' => true,
+                    'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
+                ],
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => collect($faqs)->map(fn ($faq) => [
+                        '@type' => 'Question',
+                        'name' => $faq['question'],
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+                    ])->all(),
+                ],
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'HowTo',
+                    'name' => 'How to edit a PDF online',
+                    'step' => [
+                        ['@type' => 'HowToStep', 'position' => 1, 'name' => 'Open', 'text' => 'Open a PDF by dragging it in or choosing it from your device.'],
+                        ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Edit', 'text' => 'Click existing text to edit it, or add new text, images, shapes, annotations and signatures.'],
+                        ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Organize', 'text' => 'Reorder, rotate, delete or merge pages using the page panel.'],
+                        ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Export', 'text' => 'Click Download to generate the edited PDF locally and save it to your device.'],
+                    ],
+                ],
+            ],
+        );
+    }
+
     public static function forPricing(): self
     {
         $breadcrumbItems = [

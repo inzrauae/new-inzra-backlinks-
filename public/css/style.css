@@ -246,6 +246,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ============================================================
    03. BUTTONS & CONTROLS
    ============================================================ */
+.btn[hidden] { display: none; }
 .btn {
   position: relative;
   display: inline-flex;
@@ -2366,6 +2367,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   margin-bottom: 4px;
 }
 
+.conv-actions[hidden] { display: none; }
 .conv-actions {
   display: flex; align-items: center; flex-wrap: wrap; gap: 12px;
   margin-bottom: 24px;

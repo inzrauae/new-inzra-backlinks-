@@ -39,6 +39,7 @@ Route::get('/markets/{market}', [MarketController::class, 'show'])->name('market
 
 Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
 Route::get('/image-converter', [ToolController::class, 'imageConverter'])->name('tools.image-converter');
+Route::get('/pdf-editor', [ToolController::class, 'pdfEditor'])->name('tools.pdf-editor');
 
 Route::get('/pricing', fn () => view('pages.pricing', ['seo' => SeoData::forPricing()]))->name('pricing');
 Route::get('/contact', fn () => view('pages.contact', ['seo' => SeoData::forContact()]))->name('contact');

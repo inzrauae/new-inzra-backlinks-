@@ -19,6 +19,7 @@ class SitemapController extends Controller
                 ['loc' => route('markets.index'), 'priority' => '0.7', 'changefreq' => 'monthly'],
                 ['loc' => route('tools.index'), 'priority' => '0.6', 'changefreq' => 'monthly'],
                 ['loc' => route('tools.image-converter'), 'priority' => '0.6', 'changefreq' => 'monthly'],
+                ['loc' => route('tools.pdf-editor'), 'priority' => '0.6', 'changefreq' => 'monthly'],
                 ['loc' => route('pricing'), 'priority' => '0.8', 'changefreq' => 'monthly'],
                 ['loc' => route('blog.index'), 'priority' => '0.7', 'changefreq' => 'weekly'],
                 ['loc' => route('contact'), 'priority' => '0.6', 'changefreq' => 'monthly'],

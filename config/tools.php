@@ -21,4 +21,12 @@ return [
         'route' => 'tools.image-converter',
     ],
 
+    'pdf-editor' => [
+        'name' => 'Free PDF Editor',
+        'icon' => 'fa-solid fa-file-pdf',
+        'tagline' => 'Edit, sign, merge & organize PDFs — free',
+        'description' => 'Edit text, add images, sign, merge, split and organize PDFs entirely in your browser. No sign-up, no uploads.',
+        'route' => 'tools.pdf-editor',
+    ],
+
 ];
