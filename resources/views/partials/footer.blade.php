@@ -47,6 +47,12 @@
         <a href="{{ route('markets.show', 'south-korea') }}">South Korea</a>
         <a href="{{ route('markets.show', 'central-europe') }}">Czechia, Hungary & Romania</a>
         <a href="{{ route('markets.show', 'switzerland-austria') }}">Switzerland & Austria</a>
+        <a href="{{ route('markets.show', 'united-kingdom') }}">United Kingdom</a>
+        <a href="{{ route('markets.show', 'germany') }}">Germany</a>
+        <a href="{{ route('markets.show', 'france') }}">France</a>
+        <a href="{{ route('markets.show', 'spain') }}">Spain</a>
+        <a href="{{ route('markets.show', 'italy') }}">Italy</a>
+        <a href="{{ route('markets.show', 'poland') }}">Poland</a>
       </nav>
 
       <nav class="footer__col" aria-label="Support">
