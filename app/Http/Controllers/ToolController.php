@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Support\SeoData;
 
 class ToolController extends Controller
@@ -11,6 +12,7 @@ class ToolController extends Controller
         return view('pages.tools.index', [
             'seo' => SeoData::forToolsIndex(),
             'tools' => config('tools'),
+            'products' => $this->crossPromoProducts(),
         ]);
     }
 
@@ -18,6 +20,19 @@ class ToolController extends Controller
     {
         return view('pages.tools.image-converter', [
             'seo' => SeoData::forImageConverter(),
+            'products' => $this->crossPromoProducts(),
         ]);
+    }
+
+    private function crossPromoProducts()
+    {
+        $slugs = array_slice(config('inzra.featured_product_slugs'), 0, 4);
+
+        return Product::with('category')
+            ->whereIn('slug', $slugs)
+            ->where('is_active', true)
+            ->get()
+            ->sortBy(fn ($product) => array_search($product->slug, $slugs))
+            ->values();
     }
 }

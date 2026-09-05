@@ -214,6 +214,28 @@
   </div>
 </section>
 
+@if ($products->isNotEmpty())
+<section class="section section--tint">
+  <div class="container">
+    <header class="section__head reveal">
+      <p class="eyebrow"><span class="dot"></span> Also from INZRA</p>
+      <h2 class="section__title">Optimizing images is one part of SEO</h2>
+      <p class="section__sub">If you're compressing images for a faster site, backlinks are usually the next lever for rankings. A few current listings from the marketplace:</p>
+    </header>
+
+    <div class="listing-grid">
+      @foreach ($products as $product)
+        @include('partials.products.card', ['product' => $product])
+      @endforeach
+    </div>
+
+    <div class="section__more reveal">
+      <a href="{{ route('marketplace') }}" class="btn btn--glass btn--lg ripple">Browse the full marketplace <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</section>
+@endif
+
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="{{ asset('js/image-converter.js') }}"></script>
