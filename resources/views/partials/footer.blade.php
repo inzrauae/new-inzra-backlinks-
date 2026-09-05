@@ -103,7 +103,9 @@
       </button>
     </div>
     <div class="wa-widget__body">
-      <p>👋 Hi! Questions about backlinks, pricing, or an existing order? Message us directly on WhatsApp — a real person replies.</p>
+      <span class="wa-widget__typing" id="waTyping" aria-hidden="true"><i></i><i></i><i></i></span>
+      <p id="waMessage" hidden>👋 Hi! Questions about backlinks, pricing, or an existing order? Message us directly on WhatsApp — a real person replies.</p>
+      <span class="wa-widget__time" id="waTime" hidden>Just now</span>
     </div>
     <a
       href="https://wa.me/{{ config('inzra.whatsapp_number') }}?text={{ rawurlencode('Hi INZRA! I have a question.') }}"

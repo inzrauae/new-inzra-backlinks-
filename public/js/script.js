@@ -437,11 +437,25 @@
   const waToggle = $('#waToggle');
   const waPanel = $('#waPanel');
   const waClose = $('#waClose');
+  const waTyping = $('#waTyping');
+  const waMessage = $('#waMessage');
+  const waTime = $('#waTime');
+  let waReplied = false;
 
   function setWaOpen(open) {
     if (!waPanel || !waToggle) return;
     waPanel.hidden = !open;
     waToggle.setAttribute('aria-expanded', String(open));
+
+    if (open && !waReplied) {
+      waReplied = true;
+      const delay = reduceMotion ? 0 : 900;
+      setTimeout(() => {
+        if (waTyping) waTyping.hidden = true;
+        if (waMessage) waMessage.hidden = false;
+        if (waTime) waTime.hidden = false;
+      }, delay);
+    }
   }
 
   if (waToggle && waPanel) {
