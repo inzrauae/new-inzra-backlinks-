@@ -190,6 +190,54 @@ final readonly class SeoData
         );
     }
 
+    public static function forImageConverter(): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Image Converter', 'item' => route('tools.image-converter')],
+        ];
+
+        $faqs = [
+            ['question' => 'How do I convert JPG to WebP?', 'answer' => 'Upload your JPG image, choose WebP as the output format, adjust the quality if needed, and click Convert. Your browser handles the conversion instantly.'],
+            ['question' => 'Can I convert PNG to JPG?', 'answer' => "Yes. Since JPG doesn't support transparency, transparent areas are filled with a background color you choose (white by default)."],
+            ['question' => 'Is the image converter free?', 'answer' => 'Yes, completely free with no sign-up required.'],
+            ['question' => 'Are my images uploaded to your server?', 'answer' => 'No. All conversion happens directly in your browser using the Canvas API. Your images never leave your device.'],
+            ['question' => 'Can I convert multiple images at once?', 'answer' => 'Yes — select multiple images, convert them as a batch, then download each one individually or all together as a ZIP file.'],
+            ['question' => 'What image formats are supported?', 'answer' => 'JPG, PNG and WebP convert in every modern browser. AVIF is available as an output option only in browsers that support encoding it, such as Chrome and Edge.'],
+            ['question' => 'Does converting an image reduce quality?', 'answer' => 'Converting to JPG or WebP uses a quality setting you control — higher quality means a larger file. Converting to PNG is lossless.'],
+            ['question' => 'Can I resize an image while converting?', 'answer' => 'Yes — set a custom width and height, lock the aspect ratio, or resize by percentage before converting.'],
+        ];
+
+        return new self(
+            title: 'Online Image Converter – Convert JPG, PNG, WebP & More | INZRA',
+            description: 'Free online image converter. Convert JPG, PNG, WebP and AVIF entirely in your browser — no uploads, no server processing, completely private.',
+            canonical: route('tools.image-converter'),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'WebApplication',
+                    'name' => 'INZRA Online Image Converter',
+                    'description' => 'Convert images between JPG, PNG, WebP and AVIF directly in your browser. No uploads, no account required.',
+                    'url' => route('tools.image-converter'),
+                    'applicationCategory' => 'MultimediaApplication',
+                    'operatingSystem' => 'Any (runs in a web browser)',
+                    'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
+                ],
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => collect($faqs)->map(fn ($faq) => [
+                        '@type' => 'Question',
+                        'name' => $faq['question'],
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+                    ])->all(),
+                ],
+            ],
+        );
+    }
+
     public static function forPricing(): self
     {
         $breadcrumbItems = [

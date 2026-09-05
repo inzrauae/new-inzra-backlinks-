@@ -15,6 +15,7 @@
       <a href="{{ route('categories') }}" class="nav__link {{ $active === 'categories' ? 'is-active' : '' }}">Categories</a>
       <a href="{{ route('pricing') }}" class="nav__link {{ $active === 'pricing' ? 'is-active' : '' }}">Pricing</a>
       <a href="{{ route('blog.index') }}" class="nav__link {{ $active === 'blog' ? 'is-active' : '' }}">Blog</a>
+      <a href="{{ route('tools.image-converter') }}" class="nav__link {{ $active === 'image-converter' ? 'is-active' : '' }}">Image Converter</a>
       <a href="{{ route('contact') }}" class="nav__link {{ $active === 'contact' ? 'is-active' : '' }}">Contact</a>
       <div class="nav__mobile-actions">
         @guest

@@ -66,6 +66,7 @@
 
       <nav class="footer__col" aria-label="Resources">
         <h3>Resources</h3>
+        <a href="{{ route('tools.image-converter') }}">Image Converter</a>
         <a href="{{ route('blog.index') }}">Blog</a>
         <a href="{{ route('blog.index') }}">Link building guide</a>
         <a href="{{ route('blog.index') }}">Anchor text calculator</a>

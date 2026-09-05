@@ -15,6 +15,7 @@ use App\Http\Controllers\PayPalWebhookController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\ToolController;
 use App\Support\SeoData;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 
 Route::get('/markets', [MarketController::class, 'index'])->name('markets.index');
 Route::get('/markets/{market}', [MarketController::class, 'show'])->name('markets.show');
+
+Route::get('/image-converter', [ToolController::class, 'imageConverter'])->name('tools.image-converter');
 
 Route::get('/pricing', fn () => view('pages.pricing', ['seo' => SeoData::forPricing()]))->name('pricing');
 Route::get('/contact', fn () => view('pages.contact', ['seo' => SeoData::forContact()]))->name('contact');
