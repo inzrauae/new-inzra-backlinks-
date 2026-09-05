@@ -19,7 +19,7 @@
 /storage/*.key
 /storage/pail
 /vendor
-Homestead.json
+Homestead.jsonhttps://console.cloud.google.com/apis/credentials
 Homestead.yaml
 Thumbs.db
 

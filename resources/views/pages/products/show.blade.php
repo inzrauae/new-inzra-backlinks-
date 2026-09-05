@@ -34,11 +34,11 @@
 
         <div class="auth-group">
           <label class="auth-label" for="target_url">Target URL <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <input type="url" name="target_url" id="target_url" class="auth-input" placeholder="https://yoursite.com/page">
+          <input type="url" name="target_url" id="target_url" class="auth-input" form="whatsapp-order-form" placeholder="https://yoursite.com/page">
         </div>
         <div class="auth-group">
           <label class="auth-label" for="anchor_text">Anchor text preference <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <input type="text" name="anchor_text" id="anchor_text" class="auth-input" placeholder="e.g. best seo backlinks">
+          <input type="text" name="anchor_text" id="anchor_text" class="auth-input" form="whatsapp-order-form" placeholder="e.g. best seo backlinks">
         </div>
 
         @if ($paypal->enabled && $paypal->client_id)
@@ -50,9 +50,13 @@
             <p class="pdp__note">You'll be asked to log in first, then redirected to PayPal to pay.</p>
           @endauth
         @else
-          <button type="button" class="btn btn--primary btn--lg btn--block" disabled>Ordering unavailable</button>
-          <p class="pdp__note">Online payment isn't configured yet. Please check back shortly.</p>
+          <p class="pdp__note">Online payment isn't configured yet. You can still place this order through WhatsApp.</p>
         @endif
+
+        <form id="whatsapp-order-form" method="GET" action="{{ route('orders.store', $product) }}">
+          <button type="submit" class="btn btn--glass btn--lg btn--block"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Order via WhatsApp</button>
+        </form>
+        <p class="pdp__note">Your product, target URL, and anchor preference will be attached to the order for our team.</p>
 
         <div class="pdp__cta-row" style="margin-top:8px;">
           <button class="pdp__watch pkg__wish" type="button" aria-label="Add {{ $product->name }} to watchlist" aria-pressed="false"><i class="fa-regular fa-heart" aria-hidden="true"></i> Watchlist</button>
