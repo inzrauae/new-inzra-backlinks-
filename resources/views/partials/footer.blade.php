@@ -34,7 +34,19 @@
         <a href="{{ route('categories') }}">EDU &amp; GOV links</a>
         <a href="{{ route('categories') }}">Local citations</a>
         <a href="{{ route('pricing') }}">Monthly retainers</a>
-        <a href="{{ route('markets.index') }}">Backlinks by market</a>
+      </nav>
+
+      <nav class="footer__col" aria-label="Markets">
+        <h3>Markets</h3>
+        <a href="{{ route('markets.index') }}">All markets</a>
+        <a href="{{ route('markets.show', 'netherlands') }}">Netherlands</a>
+        <a href="{{ route('markets.show', 'nordics') }}">Sweden, Norway & Denmark</a>
+        <a href="{{ route('markets.show', 'israel') }}">Israel</a>
+        <a href="{{ route('markets.show', 'uae-saudi-arabia') }}">UAE & Saudi Arabia</a>
+        <a href="{{ route('markets.show', 'japan') }}">Japan</a>
+        <a href="{{ route('markets.show', 'south-korea') }}">South Korea</a>
+        <a href="{{ route('markets.show', 'central-europe') }}">Czechia, Hungary & Romania</a>
+        <a href="{{ route('markets.show', 'switzerland-austria') }}">Switzerland & Austria</a>
       </nav>
 
       <nav class="footer__col" aria-label="Support">
