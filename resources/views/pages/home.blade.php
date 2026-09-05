@@ -2,7 +2,7 @@
 
 <section class="hero" id="home">
   <div class="container hero__copy">
-    <p class="hero__kicker"><span class="dot"></span> <span>8,412 vetted publishers · updated hourly</span></p>
+    <p class="hero__kicker"><span class="dot"></span> <span>8,412 vetted publishers</span></p>
 
     <h1 class="hero__title">
       Buy high-authority backlinks
