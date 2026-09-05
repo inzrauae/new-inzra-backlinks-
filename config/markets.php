@@ -72,7 +72,7 @@ return [
         'why_sub' => 'Three languages, one region most vendors treat as English-only.',
         'why_points' => [
             ['icon' => 'fa-solid fa-money-bill-wave', 'title' => 'iGaming and affiliate money', 'text' => 'Sweden, Norway and Denmark move enormous affiliate budgets, and local-language placements convert meaningfully better than English ones.'],
-            ['icon' => 'fa-solid fa-circle-check', 'title' => 'Real Swedish inventory today', 'text' => 'See the Swedish listing below — a live product in our marketplace, not a promise.'],
+            ['icon' => 'fa-solid fa-circle-check', 'title' => 'Real Swedish inventory today', 'text' => 'See the Swedish listing above — a live product in our marketplace, not a promise.'],
             ['icon' => 'fa-solid fa-arrow-trend-up', 'title' => 'Norway & Denmark, scoped individually', 'text' => "No fixed catalog yet for Norwegian or Danish — contact us and we'll build a campaign around your specific goals."],
         ],
         'related_product_slugs' => ['premium-svenska-backlinks-500-hogkvalitativa-lankar'],
@@ -262,7 +262,7 @@ return [
         'why_sub' => 'Premium pricing, and a language advantage we already have.',
         'why_points' => [
             ['icon' => 'fa-solid fa-coins', 'title' => 'Highest per-link prices in Europe', 'text' => 'Switzerland and Austria command premium pricing for genuine local placements.'],
-            ['icon' => 'fa-solid fa-circle-check', 'title' => 'Real German-language inventory today', 'text' => 'See the current listings below — the same publishers and approach that work for German buyers work here too.'],
+            ['icon' => 'fa-solid fa-circle-check', 'title' => 'Real German-language inventory today', 'text' => 'See the current listings above — the same publishers and approach that work for German buyers work here too.'],
             ['icon' => 'fa-solid fa-language', 'title' => 'Light localisation on request', 'text' => 'Swiss-German spelling and terminology available on request where it matters for your campaign.'],
         ],
         'related_product_slugs' => [

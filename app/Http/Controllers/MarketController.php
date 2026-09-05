@@ -21,21 +21,19 @@ class MarketController extends Controller
 
         abort_unless($data, 404);
 
-        $relatedProducts = Product::with('category')
-            ->whereIn('slug', $data['related_product_slugs'] ?? [])
-            ->where('is_active', true)
-            ->get();
+        $relatedSlugs = $data['related_product_slugs'] ?? [];
 
         $allProducts = Product::with('category')
             ->where('is_active', true)
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->sortByDesc(fn ($product) => in_array($product->slug, $relatedSlugs, true))
+            ->values();
 
         return view('pages.markets.show', [
             'seo' => SeoData::forMarket($market, $data),
             'slug' => $market,
             'market' => $data,
-            'relatedProducts' => $relatedProducts,
             'allProducts' => $allProducts,
         ]);
     }
