@@ -6,6 +6,8 @@ deployment:
     - test -f /home/seoweb/inzra-app/.env || /bin/cp /home/seoweb/inzra-app/.env.example /home/seoweb/inzra-app/.env
     - /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --working-dir=/home/seoweb/inzra-app
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan migrate --force
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan db:seed --class=ProductCategorySeeder --force
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan db:seed --class=ProductSeeder --force
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan config:cache
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan route:cache
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan view:cache
