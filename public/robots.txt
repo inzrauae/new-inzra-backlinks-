@@ -12,6 +12,15 @@ Disallow: /orders
 Disallow: /profile
 Disallow: /buy/
 
+# Disallow auth utility pages (already noindex via meta tag; this is
+# defense-in-depth, not the primary mechanism)
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirm-password
+Disallow: /verify-email
+
 # Crawl delay (be respectful to servers)
 Crawl-delay: 0.5
 
