@@ -34,6 +34,7 @@
         <a href="{{ route('categories') }}">EDU &amp; GOV links</a>
         <a href="{{ route('categories') }}">Local citations</a>
         <a href="{{ route('pricing') }}">Monthly retainers</a>
+        <a href="{{ route('markets.index') }}">Backlinks by market</a>
       </nav>
 
       <nav class="footer__col" aria-label="Support">

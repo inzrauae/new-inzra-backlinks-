@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MarketController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PayPalController;
@@ -31,6 +32,9 @@ Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marke
 Route::redirect('/products', '/marketplace', 301);
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+
+Route::get('/markets', [MarketController::class, 'index'])->name('markets.index');
+Route::get('/markets/{market}', [MarketController::class, 'show'])->name('markets.show');
 
 Route::get('/pricing', fn () => view('pages.pricing', ['seo' => SeoData::forPricing()]))->name('pricing');
 Route::get('/contact', fn () => view('pages.contact', ['seo' => SeoData::forContact()]))->name('contact');

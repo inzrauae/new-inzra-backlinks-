@@ -141,6 +141,66 @@ final readonly class SeoData
         );
     }
 
+    public static function forMarketsIndex(): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Markets', 'item' => route('markets.index')],
+        ];
+
+        return new self(
+            title: 'International SEO & Backlinks by Market | INZRA',
+            description: 'An honest, market-by-market look at link building conditions in the Netherlands, the Nordics, Israel, the UAE & Saudi Arabia, Japan, South Korea, Central Europe, and Switzerland & Austria.',
+            canonical: route('markets.index'),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+            ],
+        );
+    }
+
+    public static function forMarket(string $slug, array $market): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Markets', 'item' => route('markets.index')],
+            ['name' => $market['name'], 'item' => route('markets.show', $slug)],
+        ];
+
+        $jsonLd = [
+            [
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => "Backlinks and link building for {$market['name']}",
+                'description' => $market['meta_description'],
+                'provider' => ['@type' => 'Organization', 'name' => 'INZRA'],
+                'areaServed' => $market['countries'],
+                'serviceType' => 'Link building',
+            ],
+            self::breadcrumb($breadcrumbItems),
+        ];
+
+        if (! empty($market['faqs'])) {
+            $jsonLd[] = [
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => collect($market['faqs'])->map(fn ($faq) => [
+                    '@type' => 'Question',
+                    'name' => $faq['question'],
+                    'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+                ])->all(),
+            ];
+        }
+
+        return new self(
+            title: $market['meta_title'],
+            description: $market['meta_description'],
+            canonical: route('markets.show', $slug),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: $jsonLd,
+        );
+    }
+
     public static function forPricing(): self
     {
         $breadcrumbItems = [

@@ -16,10 +16,19 @@ class SitemapController extends Controller
                 ['loc' => url('/'), 'priority' => '1.0', 'changefreq' => 'weekly'],
                 ['loc' => route('marketplace'), 'priority' => '0.9', 'changefreq' => 'daily'],
                 ['loc' => route('categories'), 'priority' => '0.8', 'changefreq' => 'weekly'],
+                ['loc' => route('markets.index'), 'priority' => '0.7', 'changefreq' => 'monthly'],
                 ['loc' => route('pricing'), 'priority' => '0.8', 'changefreq' => 'monthly'],
                 ['loc' => route('blog.index'), 'priority' => '0.7', 'changefreq' => 'weekly'],
                 ['loc' => route('contact'), 'priority' => '0.6', 'changefreq' => 'monthly'],
             ];
+
+            foreach (array_keys(config('markets')) as $marketSlug) {
+                $urls[] = [
+                    'loc' => route('markets.show', $marketSlug),
+                    'priority' => '0.6',
+                    'changefreq' => 'monthly',
+                ];
+            }
 
             foreach (Product::where('is_active', true)->get() as $product) {
                 $urls[] = [
