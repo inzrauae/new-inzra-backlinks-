@@ -14,10 +14,10 @@
 return [
 
     'image-converter' => [
-        'name' => 'Image Converter',
+        'name' => 'Free Image Converter',
         'icon' => 'fa-solid fa-file-image',
-        'tagline' => 'Convert JPG, PNG, WebP & AVIF',
-        'description' => 'Convert images between formats entirely in your browser. No uploads, no server processing, completely private.',
+        'tagline' => 'Convert JPG, PNG, WebP & AVIF — free',
+        'description' => 'Free tool to convert images between formats entirely in your browser. No sign-up, no uploads, no server processing.',
         'route' => 'tools.image-converter',
     ],
 

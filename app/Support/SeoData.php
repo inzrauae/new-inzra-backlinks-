@@ -228,8 +228,8 @@ final readonly class SeoData
         ];
 
         return new self(
-            title: 'Online Image Converter – Convert JPG, PNG, WebP & More | INZRA',
-            description: 'Free online image converter. Convert JPG, PNG, WebP and AVIF entirely in your browser — no uploads, no server processing, completely private.',
+            title: 'Free Online Image Converter – Convert JPG, PNG, WebP & More | INZRA',
+            description: 'Free online image converter with no sign-up. Convert JPG, PNG, WebP and AVIF entirely in your browser — no uploads, no server processing, completely private.',
             canonical: route('tools.image-converter'),
             breadcrumbItems: $breadcrumbItems,
             jsonLd: [
@@ -237,11 +237,12 @@ final readonly class SeoData
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'WebApplication',
-                    'name' => 'INZRA Online Image Converter',
-                    'description' => 'Convert images between JPG, PNG, WebP and AVIF directly in your browser. No uploads, no account required.',
+                    'name' => 'INZRA Free Online Image Converter',
+                    'description' => 'Free tool to convert images between JPG, PNG, WebP and AVIF directly in your browser. No uploads, no account, no sign-up required.',
                     'url' => route('tools.image-converter'),
                     'applicationCategory' => 'MultimediaApplication',
                     'operatingSystem' => 'Any (runs in a web browser)',
+                    'isAccessibleForFree' => true,
                     'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
                 ],
                 [

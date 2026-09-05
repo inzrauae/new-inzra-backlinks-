@@ -5,10 +5,11 @@
     <x-breadcrumbs :items="$seo->breadcrumbItems" />
 
     <header class="section__head reveal">
-      <p class="eyebrow"><span class="dot"></span> Free tool</p>
-      <h1 class="section__title">Online Image Converter</h1>
-      <p class="section__sub">Convert JPG, PNG, WebP and AVIF images instantly. Everything happens in your browser — your images are never uploaded anywhere.</p>
-      <ul class="tag-list" aria-label="Privacy facts">
+      <p class="eyebrow"><span class="dot"></span> 100% free tool</p>
+      <h1 class="section__title">Free Online Image Converter</h1>
+      <p class="section__sub">Convert JPG, PNG, WebP and AVIF images instantly — free, with no sign-up. Everything happens in your browser, so your images are never uploaded anywhere.</p>
+      <ul class="tag-list" aria-label="Key facts">
+        <li><i class="fa-solid fa-tag" aria-hidden="true"></i> 100% free</li>
         <li><i class="fa-solid fa-lock" aria-hidden="true"></i> No uploads</li>
         <li><i class="fa-solid fa-server" aria-hidden="true"></i> No server processing</li>
         <li><i class="fa-solid fa-user-secret" aria-hidden="true"></i> 100% private</li>
@@ -120,8 +121,8 @@
 <section class="section section--tint">
   <div class="container container--narrow">
     <div class="pdp__body reveal">
-      <h2>What this tool does</h2>
-      <p>The INZRA Image Converter changes an image from one file format to another — for example turning a PNG into a WebP, or a JPG into a PNG — directly on your device. There's no upload step: your browser reads the file, redraws it using the Canvas API, and hands you back a new file in the format you picked.</p>
+      <h2>What this free tool does</h2>
+      <p>The INZRA Image Converter is a free tool that changes an image from one file format to another — for example turning a PNG into a WebP, or a JPG into a PNG — directly on your device. There's no sign-up and no upload step: your browser reads the file, redraws it using the Canvas API, and hands you back a new file in the format you picked, at no cost.</p>
     </div>
 
     <div class="pdp__body reveal">
