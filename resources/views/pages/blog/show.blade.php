@@ -2,7 +2,7 @@
 
 <section class="section" id="article">
   <div class="container container--narrow">
-    <p class="pdp__crumb reveal"><a href="{{ route('blog.index') }}">Blog</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> {{ $post->category }}</p>
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
 
     <article class="reveal">
       <p class="eyebrow"><span class="dot"></span> {{ $post->category }}</p>
@@ -14,7 +14,7 @@
       </p>
 
       <div class="article__cover">
-        <img src="{{ $post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg') }}" alt="{{ $post->title }}" loading="lazy">
+        <img src="{{ $post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg') }}" alt="{{ $post->title }}" fetchpriority="high" width="1600" height="800">
       </div>
 
       <div class="article__body">
@@ -24,7 +24,7 @@
       @if ($post->product)
         <div class="article__cta glass">
           <div>
-            <h3>{{ $post->product->name }}</h3>
+            <h2>{{ $post->product->name }}</h2>
             <p>${{ $post->product->formatted_price }} · <a href="{{ route('products.show', $post->product) }}">View the full listing</a></p>
           </div>
           <a href="{{ route('products.show', $post->product) }}" class="btn btn--primary ripple">Get this listing <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>

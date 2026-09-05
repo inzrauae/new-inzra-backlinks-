@@ -30,7 +30,7 @@ class SitemapController extends Controller
                 ];
             }
 
-            foreach (BlogPost::all() as $post) {
+            foreach (BlogPost::where('published_at', '<=', now())->get() as $post) {
                 $urls[] = [
                     'loc' => route('blog.show', $post),
                     'priority' => '0.6',

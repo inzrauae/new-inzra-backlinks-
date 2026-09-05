@@ -2,9 +2,11 @@
 
 <section class="section" id="marketplace">
   <div class="container">
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
+
     <header class="section__head reveal">
       <p class="eyebrow"><span class="dot"></span> Marketplace</p>
-      <h2 class="section__title">Every backlink placement we currently have live</h2>
+      <h1 class="section__title">Every backlink placement we currently have live</h1>
       <p class="section__sub">{{ $products->count() }} backlink listings currently in stock — guest posts, PBN links, niche edits, contextual links and more. Click any listing for full details, then order directly via WhatsApp.</p>
     </header>
 

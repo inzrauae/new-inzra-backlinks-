@@ -2,9 +2,11 @@
 
 <section class="section" id="faq">
   <div class="container container--narrow">
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
+
     <header class="section__head reveal">
       <p class="eyebrow"><span class="dot"></span> FAQ</p>
-      <h2 class="section__title">Questions people ask before their first order</h2>
+      <h1 class="section__title">Questions people ask before their first order</h1>
     </header>
 
     <div class="faq">

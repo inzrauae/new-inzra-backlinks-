@@ -1,16 +1,16 @@
 # INZRA SEO Robots Configuration
-# Last Updated: 2026-08-25
+# Last Updated: 2026-09-05
 
 # Allow all search engines
 User-agent: *
 Allow: /
 
-# Disallow private/admin pages
+# Disallow private/authenticated areas
 Disallow: /admin/
-Disallow: /private/
-Disallow: /*.pdf$
-Disallow: /temp/
-Disallow: /cache/
+Disallow: /dashboard
+Disallow: /orders
+Disallow: /profile
+Disallow: /buy/
 
 # Crawl delay (be respectful to servers)
 Crawl-delay: 0.5

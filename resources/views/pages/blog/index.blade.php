@@ -2,10 +2,12 @@
 
 <section class="section" id="blog">
   <div class="container">
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
+
     <header class="section__head section__head--split reveal">
       <div>
         <p class="eyebrow"><span class="dot"></span> Blog</p>
-        <h2 class="section__title">Notes from the outreach desk</h2>
+        <h1 class="section__title">Notes from the outreach desk</h1>
         <p class="section__sub">What we learn from 4,000 publisher conversations a month.</p>
       </div>
     </header>

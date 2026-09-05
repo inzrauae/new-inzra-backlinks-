@@ -11,13 +11,18 @@ class BlogController extends Controller
     {
         return view('pages.blog.index', [
             'seo' => SeoData::forBlogIndex(),
-            'posts' => BlogPost::orderByDesc('published_at')->paginate(12),
+            'posts' => BlogPost::where('published_at', '<=', now())
+                ->orderByDesc('published_at')
+                ->paginate(12),
         ]);
     }
 
     public function show(BlogPost $post)
     {
+        abort_unless($post->published_at && $post->published_at->lte(now()), 404);
+
         $related = BlogPost::where('id', '!=', $post->id)
+            ->where('published_at', '<=', now())
             ->inRandomOrder()
             ->take(3)
             ->get();

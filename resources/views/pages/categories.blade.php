@@ -2,9 +2,11 @@
 
 <section class="section" id="categories">
   <div class="container">
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
+
     <header class="section__head reveal">
       <p class="eyebrow"><span class="dot"></span> Categories</p>
-      <h2 class="section__title">Pick the link type your campaign needs</h2>
+      <h1 class="section__title">Pick the link type your campaign needs</h1>
       <p class="section__sub">Eight ways to build authority. Filter any category by DA, traffic, language or niche once you're inside the marketplace.</p>
     </header>
 

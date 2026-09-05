@@ -3,11 +3,16 @@
 
 <section class="section" id="product">
   <div class="container">
-    <p class="pdp__crumb reveal"><a href="{{ route('marketplace') }}">Marketplace</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> {{ $categoryName }}</p>
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
 
     <div class="pdp-grid reveal">
       <div class="pdp__art pdp__art--1">
-        <img src="{{ $product->image_path ? asset($product->image_path) : asset('og-cover.svg') }}" alt="{{ $product->name }}" class="pdp__art-img" loading="lazy" width="480" height="360">
+        <picture>
+          @if ($product->image_path)
+            <source srcset="{{ asset(Str::replaceLast('.png', '.webp', $product->image_path)) }}" type="image/webp">
+          @endif
+          <img src="{{ $product->image_path ? asset($product->image_path) : asset('og-cover.svg') }}" alt="{{ $product->name }}" class="pdp__art-img" fetchpriority="high" width="480" height="360">
+        </picture>
         <span class="pdp__art-badge"><i class="fa-solid fa-link" aria-hidden="true"></i> {{ $categoryName }}</span>
       </div>
 

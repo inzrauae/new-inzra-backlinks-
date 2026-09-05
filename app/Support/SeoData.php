@@ -15,6 +15,7 @@ final readonly class SeoData
         public ?string $ogImage = null,
         public ?string $keywords = null,
         public string $robots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+        public array $breadcrumbItems = [],
         public array $jsonLd = [],
     ) {}
 
@@ -67,15 +68,18 @@ final readonly class SeoData
 
     public static function forMarketplace($products): self
     {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Marketplace', 'item' => route('marketplace')],
+        ];
+
         return new self(
             title: 'Backlink Marketplace | 40+ Verified Placements | INZRA',
             description: 'Browse 40+ verified backlink placements: guest posts, PBN links, niche edits, EDU/GOV links. DA 10-95. Real traffic metrics. Order directly via WhatsApp. INZRA marketplace.',
             canonical: route('marketplace'),
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: [
-                self::breadcrumb([
-                    ['name' => 'Home', 'item' => url('/')],
-                    ['name' => 'Marketplace', 'item' => route('marketplace')],
-                ]),
+                self::breadcrumb($breadcrumbItems),
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'CollectionPage',
@@ -95,15 +99,18 @@ final readonly class SeoData
 
     public static function forCategories($categories): self
     {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Categories', 'item' => route('categories')],
+        ];
+
         return new self(
             title: 'Backlink Types & Categories | Guest Posts, PBN, EDU, GOV | INZRA',
             description: '8 backlink categories explained: guest posts, PBN links, niche edits, contextual, EDU, GOV, local citations, press releases. Filter by DA, traffic, language. INZRA.',
             canonical: route('categories'),
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: [
-                self::breadcrumb([
-                    ['name' => 'Home', 'item' => url('/')],
-                    ['name' => 'Categories', 'item' => route('categories')],
-                ]),
+                self::breadcrumb($breadcrumbItems),
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'ItemList',
@@ -124,16 +131,19 @@ final readonly class SeoData
 
     public static function forPricing(): self
     {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Pricing', 'item' => route('pricing')],
+        ];
+
         return new self(
             title: 'SEO Packages & Generative Engine Optimization (GEO) | INZRA',
             description: 'INZRA SEO & GEO packages: technical SEO, on-page optimization, high-authority backlinks, AI search visibility. Competitive pricing. 4.9/5 rating from 2,841+ customers.',
             canonical: route('pricing'),
             keywords: 'SEO packages, GEO packages, generative engine optimization, AI search optimization, technical SEO, on-page SEO, off-page SEO, link building packages, backlink packages',
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: [
-                self::breadcrumb([
-                    ['name' => 'Home', 'item' => url('/')],
-                    ['name' => 'Pricing', 'item' => route('pricing')],
-                ]),
+                self::breadcrumb($breadcrumbItems),
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'Service',
@@ -155,26 +165,35 @@ final readonly class SeoData
 
     public static function forBlogIndex(): self
     {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Blog', 'item' => route('blog.index')],
+        ];
+
         return new self(
             title: 'SEO & Link Building Blog | Authority Insights & Strategy | INZRA',
             description: 'INZRA blog: SEO insights, link building strategy, backlink case studies, anchor text ratios. Learn from 4,000+ publisher conversations. Expert link building knowledge.',
-            canonical: route('blog.index'),
+            canonical: url()->full(),
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: [
-                self::breadcrumb([
-                    ['name' => 'Home', 'item' => url('/')],
-                    ['name' => 'Blog', 'item' => route('blog.index')],
-                ]),
+                self::breadcrumb($breadcrumbItems),
             ],
         );
     }
 
     public static function forContact(): self
     {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Contact', 'item' => route('contact')],
+        ];
+
         return new self(
             title: 'Contact INZRA | Support, FAQ & Publisher List',
             description: 'Contact INZRA support. SEO FAQ, refund policy, link delivery issues. Subscribe to weekly publisher list. Expert support team. Response in 24 hours.',
             canonical: route('contact'),
             keywords: 'contact INZRA, backlink support, SEO FAQ, publisher list, refund policy, link building support, contact form',
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: [
                 [
                     '@context' => 'https://schema.org',
@@ -199,25 +218,30 @@ final readonly class SeoData
                         'availableLanguage' => ['en'],
                     ],
                 ],
-                self::breadcrumb([
-                    ['name' => 'Home', 'item' => url('/')],
-                    ['name' => 'Contact', 'item' => route('contact')],
-                ]),
+                self::breadcrumb($breadcrumbItems),
             ],
         );
     }
 
     public static function forProduct(Product $product): self
     {
-        $title = "{$product->name} — \${$product->formatted_price} | INZRA";
+        $title = $product->seo_title ?: "{$product->name} — \${$product->formatted_price} | INZRA";
         $categoryName = $product->category?->name ?? 'Marketplace';
+
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Marketplace', 'item' => route('marketplace')],
+            ['name' => $categoryName],
+            ['name' => $product->name, 'item' => route('products.show', $product)],
+        ];
 
         return new self(
             title: $title,
-            description: $product->meta_description ?? $title,
-            canonical: route('products.show', $product),
+            description: $product->seo_description ?: ($product->meta_description ?? $title),
+            canonical: $product->canonical_url ?: route('products.show', $product),
             ogType: 'product',
-            ogImage: $product->image_path ? asset($product->image_path) : asset('og-cover.svg'),
+            ogImage: $product->og_image ?: ($product->image_path ? asset($product->image_path) : asset('og-cover.svg')),
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: [
                 [
                     '@context' => 'https://schema.org',
@@ -238,12 +262,7 @@ final readonly class SeoData
                         'seller' => ['@type' => 'Organization', 'name' => 'INZRA'],
                     ],
                 ],
-                self::breadcrumb([
-                    ['name' => 'Home', 'item' => url('/')],
-                    ['name' => 'Marketplace', 'item' => route('marketplace')],
-                    ['name' => $categoryName],
-                    ['name' => $product->name, 'item' => route('products.show', $product)],
-                ]),
+                self::breadcrumb($breadcrumbItems),
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'FAQPage',
@@ -259,13 +278,22 @@ final readonly class SeoData
 
     public static function forBlogPost(BlogPost $post): self
     {
+        $ogImage = $post->og_image ?: ($post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg'));
+
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'Blog', 'item' => route('blog.index')],
+            ['name' => $post->category],
+            ['name' => $post->title, 'item' => route('blog.show', $post)],
+        ];
+
         $jsonLd = [
             [
                 '@context' => 'https://schema.org',
                 '@type' => 'BlogPosting',
                 'headline' => $post->title,
                 'description' => $post->excerpt,
-                'image' => $post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg'),
+                'image' => $ogImage,
                 'datePublished' => optional($post->published_at)->toDateString(),
                 'author' => ['@type' => 'Organization', 'name' => 'INZRA', 'url' => url('/')],
                 'publisher' => [
@@ -276,12 +304,7 @@ final readonly class SeoData
                 'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => route('blog.show', $post)],
                 'articleSection' => $post->category,
             ],
-            self::breadcrumb([
-                ['name' => 'Home', 'item' => url('/')],
-                ['name' => 'Blog', 'item' => route('blog.index')],
-                ['name' => $post->category],
-                ['name' => $post->title, 'item' => route('blog.show', $post)],
-            ]),
+            self::breadcrumb($breadcrumbItems),
         ];
 
         if (! empty($post->faqs)) {
@@ -297,11 +320,12 @@ final readonly class SeoData
         }
 
         return new self(
-            title: "{$post->title} | INZRA Blog",
-            description: $post->excerpt ?? $post->title,
-            canonical: route('blog.show', $post),
+            title: $post->seo_title ?: "{$post->title} | INZRA Blog",
+            description: $post->seo_description ?: ($post->excerpt ?? $post->title),
+            canonical: $post->canonical_url ?: route('blog.show', $post),
             ogType: 'article',
-            ogImage: $post->cover_image_path ? asset($post->cover_image_path) : asset('og-cover.svg'),
+            ogImage: $ogImage,
+            breadcrumbItems: $breadcrumbItems,
             jsonLd: $jsonLd,
         );
     }

@@ -2,9 +2,11 @@
 
 <section class="section" id="pricing">
   <div class="container">
+    <x-breadcrumbs :items="$seo->breadcrumbItems" />
+
     <header class="section__head reveal">
       <p class="eyebrow"><span class="dot"></span> Pricing</p>
-      <h2 class="section__title">SEO and GEO, packaged for steady growth</h2>
+      <h1 class="section__title">SEO and GEO, packaged for steady growth</h1>
       <p class="section__sub">Every package covers on-page, off-page, technical SEO and Generative Engine Optimization for stronger rankings and visibility in AI search.</p>
     </header>
 
