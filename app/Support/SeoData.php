@@ -61,19 +61,7 @@ final readonly class SeoData
                     'areaServed' => 'Worldwide',
                 ],
                 self::breadcrumb([['name' => 'Home', 'item' => url('/')]]),
-                [
-                    '@context' => 'https://schema.org',
-                    '@type' => 'HowTo',
-                    'name' => 'How to order a backlink placement with INZRA',
-                    'description' => 'The five steps from placing an order to receiving a live, published backlink.',
-                    'step' => [
-                        ['@type' => 'HowToStep', 'position' => 1, 'name' => 'Order', 'text' => 'Choose a package or filter the marketplace by DA, traffic, country and niche. Add your target URL and anchor preferences at checkout.'],
-                        ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Website selection', 'text' => 'We shortlist three publishers that fit your topic and send live metrics for each. You pick one, or ask for another round.'],
-                        ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Content writing', 'text' => 'A native-language writer in your niche drafts the article. You get the Google Doc to comment on before it goes anywhere near the editor.'],
-                        ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Publishing', 'text' => 'The editor publishes on their own schedule with your link in-content and dofollow. We confirm the anchor and the surrounding paragraph.'],
-                        ['@type' => 'HowToStep', 'position' => 5, 'name' => 'Delivery report', 'text' => 'Live URL, screenshot, final metrics and an indexing check at day 14. Monitoring keeps running for 12 months.'],
-                    ],
-                ],
+                self::orderProcessHowTo(),
             ],
         );
     }
@@ -178,6 +166,7 @@ final readonly class SeoData
                 'serviceType' => 'Link building',
             ],
             self::breadcrumb($breadcrumbItems),
+            self::orderProcessHowTo(),
         ];
 
         if (! empty($market['faqs'])) {
@@ -400,6 +389,23 @@ final readonly class SeoData
             breadcrumbItems: $breadcrumbItems,
             jsonLd: $jsonLd,
         );
+    }
+
+    private static function orderProcessHowTo(): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'HowTo',
+            'name' => 'How to order a backlink placement with INZRA',
+            'description' => 'The five steps from placing an order to receiving a live, published backlink.',
+            'step' => [
+                ['@type' => 'HowToStep', 'position' => 1, 'name' => 'Order', 'text' => 'Choose a package or filter the marketplace by DA, traffic, country and niche. Add your target URL and anchor preferences at checkout.'],
+                ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Website selection', 'text' => 'We shortlist three publishers that fit your topic and send live metrics for each. You pick one, or ask for another round.'],
+                ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Content writing', 'text' => 'A native-language writer in your niche drafts the article. You get the Google Doc to comment on before it goes anywhere near the editor.'],
+                ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Publishing', 'text' => 'The editor publishes on their own schedule with your link in-content and dofollow. We confirm the anchor and the surrounding paragraph.'],
+                ['@type' => 'HowToStep', 'position' => 5, 'name' => 'Delivery report', 'text' => 'Live URL, screenshot, final metrics and an indexing check at day 14. Monitoring keeps running for 12 months.'],
+            ],
+        ];
     }
 
     private static function breadcrumb(array $items): array

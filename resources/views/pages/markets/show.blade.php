@@ -33,6 +33,21 @@
   </div>
 </section>
 
+@if (!empty($market['facts']))
+<section class="section" id="market-facts">
+  <div class="container container--narrow">
+    <div class="pdp__specs reveal">
+      <h2>{{ $market['name'] }} at a glance</h2>
+      <div class="pdp__specs-table">
+        @foreach ($market['facts'] as $label => $value)
+          <div class="pdp__spec"><span>{{ $label }}</span><b>{{ $value }}</b></div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</section>
+@endif
+
 @if ($relatedProducts->isNotEmpty())
 <section class="section" id="market-inventory">
   <div class="container">

@@ -13,6 +13,9 @@
 | honestly and linked via related_product_slugs; where it doesn't yet, the
 | copy says so plainly. No invented stats, no fabricated local presence.
 |
+| 'facts' are plain, verifiable general knowledge (language, currency,
+| dominant search engine) — not claims about INZRA itself.
+|
 */
 
 return [
@@ -27,6 +30,12 @@ return [
         'h1' => 'Backlinks and SEO for the Dutch market',
         'intro' => "The Netherlands has some of the highest average marketing budgets in Europe, but most backlink vendors only operate in English. That leaves a real gap for anyone targeting Dutch-reading audiences directly — .nl domains, Dutch news sites and Dutch-language blogs that don't show up in a typical English-first vendor's inventory.",
         'link_types' => ['Guest posts', 'Niche edits', 'Digital PR'],
+        'facts' => [
+            'Language' => 'Dutch (English widely used in business)',
+            'Primary search engine' => 'Google',
+            'Currency' => 'Euro (EUR)',
+            'Best-fit link types' => 'Guest posts, niche edits',
+        ],
         'why_heading' => 'Why the Dutch market is different',
         'why_sub' => "Budgets here are strong. The pool of vendors who can genuinely deliver in Dutch is not.",
         'why_points' => [
@@ -38,6 +47,8 @@ return [
         'faqs' => [
             ['question' => 'Do you have real Dutch-language publishers today?', 'answer' => "We're actively building this network. Today we can scope a custom campaign for you rather than sell an English placement labelled as Dutch — talk to us about your specific target keywords and timeline."],
             ['question' => 'Why is Dutch link building harder to find than English?', 'answer' => 'Because it requires a native Dutch writer and a real relationship with a .nl publisher. Most vendors skip both and publish English content on Dutch domains instead.'],
+            ['question' => 'What language is the content written in?', 'answer' => "Standard Dutch (Nederlands) from a native writer — not Flemish-specific unless you tell us your audience is in Belgium."],
+            ['question' => 'Can I run a Dutch campaign alongside my existing English or German one?', 'answer' => 'Yes — most clients add Dutch alongside an existing campaign rather than replacing it.'],
         ],
     ],
 
@@ -51,6 +62,12 @@ return [
         'h1' => 'Backlinks and SEO for Sweden, Norway & Denmark',
         'intro' => 'iGaming and affiliate marketing move enormous budgets across Sweden, Norway and Denmark, yet very few backlink vendors have a real presence in any of the three languages.',
         'link_types' => ['Guest posts', 'Niche edits', 'Contextual links'],
+        'facts' => [
+            'Languages' => 'Swedish, Norwegian, Danish',
+            'Primary search engine' => 'Google',
+            'Currencies' => 'SEK, NOK, DKK',
+            'Best-fit link types' => 'Guest posts, contextual links',
+        ],
         'why_heading' => 'Why the Nordic market is different',
         'why_sub' => 'Three languages, one region most vendors treat as English-only.',
         'why_points' => [
@@ -62,6 +79,8 @@ return [
         'faqs' => [
             ['question' => 'Do you have real Swedish inventory, or is this just marketing copy?', 'answer' => 'Real — see the linked listing on this page. It\'s an actual product in our marketplace, not a placeholder.'],
             ['question' => 'What about Norway and Denmark specifically?', 'answer' => "We don't have fixed catalog listings for those yet. Contact us with your target keywords and we'll scope what's realistic."],
+            ['question' => 'Which Nordic language should I start with?', 'answer' => "Swedish, if you only pick one — it's where we have live inventory today and the fastest turnaround."],
+            ['question' => 'Do Swedish, Norwegian and Danish readers respond differently to the same content?', 'answer' => "Yes. They're mutually intelligible in writing, but a native reader still notices when copy \"feels\" like it was written for a different one of the three."],
         ],
     ],
 
@@ -75,6 +94,12 @@ return [
         'h1' => 'Backlinks and SEO for the Israeli market',
         'intro' => 'Forex, crypto and affiliate marketing are three of the biggest verticals in Israeli digital marketing, and Hebrew is a genuine language barrier for most international backlink vendors.',
         'link_types' => ['Guest posts', 'Digital PR', 'Contextual links'],
+        'facts' => [
+            'Language' => 'Hebrew (official); English common in tech/business',
+            'Primary search engine' => 'Google',
+            'Currency' => 'New Israeli Shekel (ILS)',
+            'Best-fit link types' => 'Guest posts, digital PR',
+        ],
         'why_heading' => 'Why the Israeli market is different',
         'why_sub' => 'High-value verticals, a real language barrier most vendors ignore.',
         'why_points' => [
@@ -86,6 +111,8 @@ return [
         'faqs' => [
             ['question' => 'Can you place Hebrew-language content?', 'answer' => "Not yet as a standing service — it's on our roadmap. We can discuss a custom scope if you have a specific need."],
             ['question' => 'What can INZRA do for Israeli campaigns today?', 'answer' => 'English-language guest posts and digital PR aimed at the international audience your Israeli business also serves.'],
+            ['question' => 'Is English content enough for the Israeli tech and startup scene?', 'answer' => "Often yes — Israeli B2B tech audiences read English comfortably. Hebrew matters more for consumer-facing finance, crypto and affiliate campaigns."],
+            ['question' => "What's the timeline for scoping a Hebrew campaign?", 'answer' => "We don't have a fixed timeline since it's not an active service yet — reach out and we'll tell you honestly what's realistic."],
         ],
     ],
 
@@ -99,6 +126,12 @@ return [
         'h1' => 'Backlinks and SEO for the UAE & Saudi market',
         'intro' => "INZRA is based in Dubai, so the UAE and Saudi market isn't a new region for us — it's home turf.",
         'link_types' => ['Guest posts', 'Digital PR', 'Local citations'],
+        'facts' => [
+            'Language' => 'Arabic (official); English widely used in business',
+            'Primary search engine' => 'Google',
+            'Currencies' => 'AED (UAE), SAR (Saudi Arabia)',
+            'Best-fit link types' => 'Guest posts, local citations',
+        ],
         'why_heading' => 'Why the Gulf market is different',
         'why_sub' => 'Big budgets, and a market we actually operate in day to day.',
         'why_points' => [
@@ -110,6 +143,8 @@ return [
         'faqs' => [
             ['question' => 'Is INZRA actually based in the UAE, or is this just a marketing angle?', 'answer' => "Yes — INZRA is a real, Dubai-registered business. It's not a claim we're making up for this page."],
             ['question' => 'Do you offer Arabic-language content specifically?', 'answer' => "We can scope Arabic or bilingual Arabic/English campaigns — contact us with your target market and keywords."],
+            ['question' => 'Do you serve both the UAE and Saudi Arabia, or just Dubai?', 'answer' => 'Both — being Gulf-based gives us reach across the wider region, not just the UAE.'],
+            ['question' => 'Is Arabic content written by a native speaker?', 'answer' => 'Yes — when we scope an Arabic campaign, it\'s a native Arabic writer, not a translation.'],
         ],
     ],
 
@@ -123,6 +158,12 @@ return [
         'h1' => 'Backlinks and SEO for the Japanese market',
         'intro' => "Japan has some of the largest digital marketing budgets in Asia and almost no foreign backlink vendors competing for them — but that's because entering the market is genuinely hard, not because the opportunity is small.",
         'link_types' => ['Digital PR', 'Guest posts'],
+        'facts' => [
+            'Language' => 'Japanese',
+            'Primary search engine' => 'Google (Yahoo! Japan also widely used)',
+            'Currency' => 'Japanese Yen (JPY)',
+            'Best-fit link types' => 'Digital PR, guest posts',
+        ],
         'why_heading' => 'Why the Japanese market is different',
         'why_sub' => 'A real opportunity, and a real barrier to entry — we won\'t pretend otherwise.',
         'why_points' => [
@@ -134,6 +175,8 @@ return [
         'faqs' => [
             ['question' => 'Do you have Japanese publishers today?', 'answer' => 'No, not as an active network — this page exists to be honest about that rather than imply coverage we don\'t have.'],
             ['question' => 'Why is Japan harder to enter than other large markets?', 'answer' => 'Publisher trust there is typically built through local presence and direct introductions, not cold outreach — which is a slower, different process than most Western link building.'],
+            ['question' => 'Is Yahoo! Japan worth optimizing for separately from Google?', 'answer' => "Yahoo! Japan has used Google's search results and ranking algorithm since 2010, so optimizing for Google covers both in practice."],
+            ['question' => 'What would it take for INZRA to build a real Japanese network?', 'answer' => "Direct local relationships and likely a local partner — real lead time we don't have a date for yet, which is why we're not promising it here."],
         ],
     ],
 
@@ -147,6 +190,12 @@ return [
         'h1' => 'Backlinks and SEO for the Korean market',
         'intro' => "Korea shares Japan's combination of large budgets and thin foreign competition, with a slightly lower barrier to entry for vendors willing to invest in the relationships.",
         'link_types' => ['Digital PR', 'Guest posts'],
+        'facts' => [
+            'Language' => 'Korean',
+            'Primary search engines' => 'Naver, Google',
+            'Currency' => 'Korean Won (KRW)',
+            'Best-fit link types' => 'Digital PR, guest posts',
+        ],
         'why_heading' => 'Why the Korean market is different',
         'why_sub' => "It's not just Google — and most vendors miss that entirely.",
         'why_points' => [
@@ -157,6 +206,8 @@ return [
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Can INZRA help with Naver specifically?', 'answer' => "Not as a packaged service today. It's a genuinely different discipline from Google SEO, and we'd want to scope it properly with you rather than bolt it onto a standard link-building package."],
+            ['question' => 'Does ranking on Google help if my audience uses Naver?', 'answer' => "Only partly. Naver has its own indexing and its own blog/cafe ecosystem, and doesn't weight backlinks the way Google does — a Google-only strategy will underperform there."],
+            ['question' => 'Can you do Naver blog or cafe placements?', 'answer' => "Not as a standing service today — it's a genuinely different discipline from link building and we'd want to scope it as its own project."],
         ],
     ],
 
@@ -170,6 +221,12 @@ return [
         'h1' => 'Backlinks and SEO for Czechia, Hungary & Romania',
         'intro' => 'SEO spend across Czechia, Hungary and Romania has been climbing steadily, while the number of vendors who can genuinely place content in Czech, Hungarian or Romanian has not kept pace.',
         'link_types' => ['Guest posts', 'Niche edits', 'Contextual links'],
+        'facts' => [
+            'Languages' => 'Czech, Hungarian, Romanian',
+            'Primary search engine' => 'Google (Seznam.cz also used in Czechia)',
+            'Currencies' => 'CZK, HUF, RON',
+            'Best-fit link types' => 'Guest posts, niche edits',
+        ],
         'why_heading' => 'Why this market is different',
         'why_sub' => 'Three languages, three publisher landscapes — not one region.',
         'why_points' => [
@@ -180,6 +237,8 @@ return [
         'related_product_slugs' => [],
         'faqs' => [
             ['question' => 'Is this one package covering all three countries?', 'answer' => "No — we scope Czech, Hungarian and Romanian campaigns separately, since they're different languages and different publisher networks."],
+            ['question' => 'Is Seznam.cz worth targeting separately in Czechia?', 'answer' => "For a serious Czech campaign, yes — it's a real, independently-indexed search engine, not a Google mirror, so it needs its own consideration."],
+            ['question' => 'Do you write in Hungarian and Romanian with native writers?', 'answer' => "For any campaign we scope in those languages, yes — we won't publish machine-translated content under a client's name."],
         ],
     ],
 
@@ -193,6 +252,12 @@ return [
         'h1' => 'Backlinks and SEO for Switzerland & Austria',
         'intro' => 'Switzerland and Austria have the highest average per-link prices in Europe, and both are effectively part of the German-language SEO world — which is where we already have real inventory.',
         'link_types' => ['Guest posts', 'Niche edits', 'Contextual links'],
+        'facts' => [
+            'Language' => 'German (Swiss German spoken; standard German written)',
+            'Primary search engine' => 'Google',
+            'Currencies' => 'CHF (Switzerland), EUR (Austria)',
+            'Best-fit link types' => 'Guest posts, niche edits',
+        ],
         'why_heading' => 'Why this market is different',
         'why_sub' => 'Premium pricing, and a language advantage we already have.',
         'why_points' => [
@@ -206,6 +271,8 @@ return [
         ],
         'faqs' => [
             ['question' => 'Are these German listings actually usable for Swiss or Austrian audiences?', 'answer' => 'Yes, generally — the language is shared. We offer light localisation on request for Swiss-specific spelling/terminology if that matters for your campaign.'],
+            ['question' => 'Is Swiss German different enough to need separate content?', 'answer' => 'Spoken Swiss German varies a lot by canton, but written content (including web content) is standard German almost everywhere — so our existing German inventory works with only light localisation.'],
+            ['question' => 'Why are per-link prices higher in Switzerland and Austria?', 'answer' => 'Smaller, wealthier markets with less publisher competition than Germany itself — genuine supply and demand, not a vendor markup.'],
         ],
     ],
 
