@@ -16,6 +16,7 @@
    13. Newsletter form
    14. Store search + category filter
    15. Buy button — WhatsApp link wiring
+   16. WhatsApp chat widget
    ============================================================ */
 
 (function () {
@@ -427,6 +428,35 @@
     ];
     btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
   });
+
+
+  /* ==========================================================
+     16. WHATSAPP CHAT WIDGET
+     ========================================================== */
+  const waWidget = $('#waWidget');
+  const waToggle = $('#waToggle');
+  const waPanel = $('#waPanel');
+  const waClose = $('#waClose');
+
+  function setWaOpen(open) {
+    if (!waPanel || !waToggle) return;
+    waPanel.hidden = !open;
+    waToggle.setAttribute('aria-expanded', String(open));
+  }
+
+  if (waToggle && waPanel) {
+    waToggle.addEventListener('click', () => setWaOpen(waPanel.hidden));
+
+    if (waClose) waClose.addEventListener('click', () => setWaOpen(false));
+
+    document.addEventListener('click', e => {
+      if (!waPanel.hidden && waWidget && !waWidget.contains(e.target)) setWaOpen(false);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !waPanel.hidden) setWaOpen(false);
+    });
+  }
 
 
   /* ==========================================================

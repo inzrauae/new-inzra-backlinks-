@@ -89,3 +89,33 @@
 <button class="to-top" id="toTop" type="button" aria-label="Back to top">
   <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
 </button>
+
+<div class="wa-widget" id="waWidget">
+  <div class="wa-widget__panel glass" id="waPanel" role="dialog" aria-label="Chat with INZRA on WhatsApp" hidden>
+    <div class="wa-widget__header">
+      <span class="wa-widget__avatar"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span>
+      <div>
+        <b>INZRA</b>
+        <span>Typically replies within a few hours</span>
+      </div>
+      <button type="button" class="wa-widget__close" id="waClose" aria-label="Close chat">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="wa-widget__body">
+      <p>👋 Hi! Questions about backlinks, pricing, or an existing order? Message us directly on WhatsApp — a real person replies.</p>
+    </div>
+    <a
+      href="https://wa.me/{{ config('inzra.whatsapp_number') }}?text={{ rawurlencode('Hi INZRA! I have a question.') }}"
+      target="_blank"
+      rel="noopener"
+      class="btn btn--primary btn--block wa-widget__cta"
+    >
+      <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Start WhatsApp chat
+    </a>
+  </div>
+
+  <button type="button" class="wa-widget__button" id="waToggle" aria-label="Open WhatsApp chat" aria-expanded="false" aria-controls="waPanel">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+  </button>
+</div>

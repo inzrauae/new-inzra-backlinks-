@@ -1932,6 +1932,64 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 .to-top:hover { transform: translateY(-4px) scale(1.06); }
 
+.wa-widget { position: fixed; left: 24px; bottom: 24px; z-index: 140; }
+
+.wa-widget__button {
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  font-size: 1.4rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--sh-glow);
+  transition: transform var(--t);
+}
+.wa-widget__button:hover { transform: translateY(-4px) scale(1.06); }
+
+.wa-widget__panel {
+  position: absolute;
+  bottom: 68px; left: 0;
+  width: 300px;
+  max-width: calc(100vw - 48px);
+  padding: 18px;
+  box-shadow: var(--sh-lg);
+}
+.wa-widget__panel[hidden] { display: none; }
+
+.wa-widget__header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+.wa-widget__avatar {
+  width: 38px; height: 38px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: #25D366; color: #fff; font-size: 1.05rem;
+}
+.wa-widget__header b { display: block; font-size: .92rem; }
+.wa-widget__header span { display: block; font-size: .74rem; color: var(--muted); }
+.wa-widget__close {
+  margin-left: auto;
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: .9rem;
+  padding: 4px;
+}
+
+.wa-widget__body p {
+  font-size: .85rem; line-height: 1.5; color: var(--text-2);
+  background: var(--bg-tint);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.wa-widget__cta { background: #25D366; border-color: #25D366; animation: none; }
+.wa-widget__cta:hover { background: #1EBE5A; }
+
+@media (max-width: 640px) {
+  .wa-widget { left: 16px; bottom: 16px; }
+  .wa-widget__button { width: 50px; height: 50px; font-size: 1.25rem; }
+}
+
 
 /* ============================================================
    18. REVEAL ANIMATIONS (Intersection Observer)
