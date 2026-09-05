@@ -26,11 +26,17 @@ class MarketController extends Controller
             ->where('is_active', true)
             ->get();
 
+        $allProducts = Product::with('category')
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
         return view('pages.markets.show', [
             'seo' => SeoData::forMarket($market, $data),
             'slug' => $market,
             'market' => $data,
             'relatedProducts' => $relatedProducts,
+            'allProducts' => $allProducts,
         ]);
     }
 }

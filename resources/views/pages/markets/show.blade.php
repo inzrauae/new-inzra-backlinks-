@@ -51,7 +51,29 @@
 </section>
 @endif
 
-<section class="section{{ $relatedProducts->isEmpty() ? '' : ' section--tint' }}" id="market-why">
+<section class="section section--tint" id="market-marketplace">
+  <div class="container">
+    <header class="section__head reveal">
+      <p class="eyebrow"><span class="dot"></span> Marketplace</p>
+      <h2 class="section__title">The full INZRA marketplace</h2>
+      <p class="section__sub">
+        @if ($relatedProducts->isNotEmpty())
+          Every active listing, open to buyers anywhere — including the {{ $market['name'] }}-specific inventory above.
+        @else
+          Every active listing, open to buyers anywhere — browse the complete catalog while we build out {{ $market['name'] }}-specific inventory.
+        @endif
+      </p>
+    </header>
+
+    <div class="listing-grid">
+      @foreach ($allProducts as $product)
+        @include('partials.products.card', ['product' => $product])
+      @endforeach
+    </div>
+  </div>
+</section>
+
+<section class="section" id="market-why">
   <div class="container">
     <header class="section__head reveal">
       <p class="eyebrow"><span class="dot"></span> {{ $market['eyebrow'] }}</p>
