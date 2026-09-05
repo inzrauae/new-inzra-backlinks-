@@ -20,10 +20,9 @@
         <span class="listing__cat">{{ $categoryName }}</span>
         <h1 class="pdp__title">{{ $product->name }}</h1>
 
-        <div class="pdp__google-rating">
-          <i class="fa-brands fa-google" aria-hidden="true"></i>
-          <span class="pdp__google-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-          <span class="pdp__google-count">2k+ reviews</span>
+        <div class="pdp__rating">
+          <span class="pdp__rating-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+          <span class="pdp__rating-count">2k+ reviews</span>
         </div>
 
         <div class="pdp__rating-row">

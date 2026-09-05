@@ -50,7 +50,7 @@ final readonly class SeoData
             jsonLd: [
                 [
                     '@context' => 'https://schema.org',
-                    '@type' => 'LocalBusiness',
+                    '@type' => 'Organization',
                     '@id' => url('/'),
                     'name' => 'INZRA',
                     'description' => 'Verified marketplace for high-authority SEO backlinks and link building services.',
@@ -58,7 +58,6 @@ final readonly class SeoData
                     'image' => asset('og-cover.svg'),
                     'sameAs' => ['https://twitter.com/inzra', 'https://linkedin.com/company/inzra'],
                     'aggregateRating' => ['@type' => 'AggregateRating', 'ratingValue' => '4.9', 'reviewCount' => '2841', 'bestRating' => '5', 'worstRating' => '1'],
-                    'priceRange' => '$3-$280',
                     'areaServed' => 'Worldwide',
                 ],
                 self::breadcrumb([['name' => 'Home', 'item' => url('/')]]),

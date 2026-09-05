@@ -1199,14 +1199,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   margin-bottom: 10px;
 }
 
-.pdp__google-rating {
+.pdp__rating {
   display: flex; align-items: center; gap: 7px;
   font-size: .85rem;
   margin-bottom: 14px;
 }
-.pdp__google-rating .fa-google { color: #4285F4; font-size: .92rem; }
-.pdp__google-stars { display: inline-flex; gap: 1px; color: #FBBF24; font-size: .78rem; }
-.pdp__google-count { color: var(--muted); font-weight: 600; }
+.pdp__rating-stars { display: inline-flex; gap: 1px; color: #FBBF24; font-size: .78rem; }
+.pdp__rating-count { color: var(--muted); font-weight: 600; }
 
 /* eBay-style urgency row: "N sold" + stock level */
 .pdp__rating-row {
