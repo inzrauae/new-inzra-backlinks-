@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             BlogPostSeeder::class,
+            CountrySeeder::class,
+            SeoServiceSeeder::class,
             AdminUserSeeder::class,
         ]);
     }

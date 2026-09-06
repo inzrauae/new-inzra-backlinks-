@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\RecordSeoOrderStatusChange;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Enums\SeoOrderStatus;
+use App\Mail\SeoOrderReceived;
 use App\Models\Order;
+use App\Models\SeoOrder;
 use App\Services\PayPalClient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class PayPalWebhookController extends Controller
 {
@@ -39,10 +45,20 @@ class PayPalWebhookController extends Controller
         $resource = $request->input('resource', []);
 
         if (in_array($event, ['PAYMENT.CAPTURE.COMPLETED', 'PAYMENT.CAPTURE.DENIED', 'PAYMENT.CAPTURE.REFUNDED'], true)) {
-            $order = $this->resolveOrder($resource);
+            // custom_id is namespaced ("seo:{id}") for SEO orders specifically
+            // so it can never collide with a marketplace Order's integer id.
+            if (Str::startsWith($resource['custom_id'] ?? '', 'seo:')) {
+                $seoOrder = $this->resolveSeoOrder($resource);
 
-            if ($order) {
-                $this->applyCaptureEvent($order, $event);
+                if ($seoOrder) {
+                    $this->applySeoCaptureEvent($seoOrder, $event);
+                }
+            } else {
+                $order = $this->resolveOrder($resource);
+
+                if ($order) {
+                    $this->applyCaptureEvent($order, $event);
+                }
             }
         }
 
@@ -58,6 +74,46 @@ class PayPalWebhookController extends Controller
             ->when($orderId, fn ($q) => $q->orWhere('id', $orderId))
             ->when($paypalOrderId, fn ($q) => $q->orWhere('paypal_order_id', $paypalOrderId))
             ->first();
+    }
+
+    private function resolveSeoOrder(array $resource): ?SeoOrder
+    {
+        $seoOrderId = Str::after($resource['custom_id'] ?? '', 'seo:');
+        $paypalOrderId = $resource['supplementary_data']['related_ids']['order_id'] ?? null;
+
+        return SeoOrder::query()
+            ->when($seoOrderId, fn ($q) => $q->orWhere('id', $seoOrderId))
+            ->when($paypalOrderId, fn ($q) => $q->orWhere('paypal_order_id', $paypalOrderId))
+            ->first();
+    }
+
+    private function applySeoCaptureEvent(SeoOrder $order, string $event): void
+    {
+        match ($event) {
+            'PAYMENT.CAPTURE.COMPLETED' => $this->markSeoOrderPaid($order),
+            'PAYMENT.CAPTURE.DENIED' => $order->update(['payment_status' => PaymentStatus::Unpaid]),
+            'PAYMENT.CAPTURE.REFUNDED' => $order->update(['payment_status' => PaymentStatus::Refunded]),
+            default => null,
+        };
+    }
+
+    private function markSeoOrderPaid(SeoOrder $order): void
+    {
+        // Already handled by the direct capture call in
+        // SeoOrderPayPalController — this is only the fallback path.
+        if ($order->payment_status === PaymentStatus::Paid) {
+            return;
+        }
+
+        $order->update([
+            'payment_status' => PaymentStatus::Paid,
+            'paid_at' => $order->paid_at ?? now(),
+        ]);
+
+        (new RecordSeoOrderStatusChange)->handle($order, SeoOrderStatus::Paid);
+        (new RecordSeoOrderStatusChange)->handle($order->fresh(), SeoOrderStatus::OrderReceived);
+
+        Mail::to($order->user->email)->send(new SeoOrderReceived($order->fresh()));
     }
 
     private function applyCaptureEvent(Order $order, string $event): void

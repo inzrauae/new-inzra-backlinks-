@@ -9,6 +9,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard
 Disallow: /orders
+Disallow: /seo-orders
 Disallow: /profile
 Disallow: /buy/
 

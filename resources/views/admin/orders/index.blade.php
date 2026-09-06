@@ -2,6 +2,7 @@
 
 <section class="section">
   <div class="container">
+    @include('partials.admin.subnav', ['adminActive' => 'orders'])
     <header class="section__head reveal">
       <p class="eyebrow"><span class="dot"></span> Admin</p>
       <h2 class="section__title">Manage orders</h2>

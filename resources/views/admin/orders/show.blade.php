@@ -2,6 +2,7 @@
 
 <section class="section">
   <div class="container container--narrow">
+    @include('partials.admin.subnav', ['adminActive' => 'orders'])
     <p class="pdp__crumb reveal"><a href="{{ route('admin.orders.index') }}">Manage orders</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> {{ $order->order_number }}</p>
 
     <header class="section__head reveal">

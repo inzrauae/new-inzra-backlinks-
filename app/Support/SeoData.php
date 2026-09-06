@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\BlogPost;
 use App\Models\Product;
+use App\Models\SeoService;
 
 final readonly class SeoData
 {
@@ -286,7 +287,7 @@ final readonly class SeoData
             ['question' => 'Can I edit scanned or image-only PDFs?', 'answer' => "The editor detects scanned pages and lets you know text editing isn't available on them yet. You can still add new text, images, annotations and signatures on top of a scanned page."],
             ['question' => 'Can I merge or split PDFs?', 'answer' => 'Yes — import additional PDFs to merge their pages in, or extract/export selected pages as a new file, all locally in your browser.'],
             ['question' => 'Can I fill out PDF forms?', 'answer' => 'Yes, existing fillable form fields (text, checkbox, radio, dropdown) are detected and can be filled in, with an option to flatten the form into the final PDF.'],
-            ['question' => 'Does true redaction actually remove the content?', 'answer' => "Yes for the redaction tool: it removes the underlying text/graphics from the exported PDF rather than just covering it, falling back to flattening the page to an image on pages too complex to safely edit. The separate whiteout tool only visually covers content and is labeled as such — use redaction, not whiteout, when removal matters."],
+            ['question' => 'Does true redaction actually remove the content?', 'answer' => 'Yes for the redaction tool: it removes the underlying text/graphics from the exported PDF rather than just covering it, falling back to flattening the page to an image on pages too complex to safely edit. The separate whiteout tool only visually covers content and is labeled as such — use redaction, not whiteout, when removal matters.'],
             ['question' => 'Can I password-protect or encrypt the PDF I export?', 'answer' => "Not yet — there's no reliable way to add standard PDF encryption entirely in the browser today, so this editor doesn't offer it rather than faking it. You can still open PDFs that are already password protected."],
         ];
 
@@ -326,6 +327,57 @@ final readonly class SeoData
                         ['@type' => 'HowToStep', 'position' => 2, 'name' => 'Edit', 'text' => 'Click existing text to edit it, or add new text, images, shapes, annotations and signatures.'],
                         ['@type' => 'HowToStep', 'position' => 3, 'name' => 'Organize', 'text' => 'Reorder, rotate, delete or merge pages using the page panel.'],
                         ['@type' => 'HowToStep', 'position' => 4, 'name' => 'Export', 'text' => 'Click Download to generate the edited PDF locally and save it to your device.'],
+                    ],
+                ],
+            ],
+        );
+    }
+
+    public static function forSeoBacklinkServicesIndex(): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'SEO Backlink Services', 'item' => route('seo-backlink-services.index')],
+        ];
+
+        return new self(
+            title: 'SEO Backlink Services — Managed Publication Orders | INZRA',
+            description: 'Order managed backlink publications — Wiki/Editorial, Web 2.0, DA 70+ and redirect placements — with live pricing, order tracking and a verified completion report.',
+            canonical: route('seo-backlink-services.index'),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+            ],
+        );
+    }
+
+    public static function forSeoBacklinkService(SeoService $service): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'SEO Backlink Services', 'item' => route('seo-backlink-services.index')],
+            ['name' => $service->name, 'item' => route('seo-backlink-services.show', $service)],
+        ];
+
+        return new self(
+            title: "{$service->name} | Managed SEO Publication Orders | INZRA",
+            description: $service->description ?: "Order {$service->name} placements from INZRA — live pricing, manual publisher fulfillment, verified completion report.",
+            canonical: route('seo-backlink-services.show', $service),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'Service',
+                    'name' => $service->name,
+                    'description' => $service->description,
+                    'provider' => ['@type' => 'Organization', 'name' => 'INZRA'],
+                    'serviceType' => 'Link building',
+                    'offers' => [
+                        '@type' => 'Offer',
+                        'priceCurrency' => 'USD',
+                        'price' => number_format((float) $service->unit_price, 4, '.', ''),
+                        'url' => route('seo-backlink-services.show', $service),
                     ],
                 ],
             ],

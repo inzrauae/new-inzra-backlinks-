@@ -363,6 +363,35 @@ The "Continue with Google" button now appears on `/login` and `/register`.
 
 ---
 
+## Part 7 — SEO Backlink Services tool
+
+`/seo-backlink-services` is a managed publication/backlink ordering tool
+layered onto the existing app — same auth, same PayPal settings at
+`/admin/settings/payment`, same `.env` mail config. Nothing extra to
+configure beyond what's already above. A few notes specific to it:
+
+- **Reports are generated synchronously**, not via a queue worker — this
+  matches the rest of the app (`QUEUE_CONNECTION=sync`). A report (PDF via
+  `dompdf/dompdf`, plus CSV) is built the moment an order's verified
+  publication count reaches its ordered quantity, or when an admin clicks
+  "Regenerate report". `dompdf` is pure PHP with no system binaries, so it
+  needs nothing extra on cPanel beyond the `composer install` that's already
+  part of `.cpanel.yml`.
+- **New seeders** (`CountrySeeder`, `SeoServiceSeeder`) are already wired
+  into `.cpanel.yml` and re-run safely on every deploy (they `updateOrCreate`/
+  `upsert`, same as `ProductCategorySeeder`/`ProductSeeder`). Don't re-run
+  full `db:seed` after launch for the same reason the existing note above
+  says not to.
+- **Admin**: manage services/pricing at `/admin/seo-services`, orders at
+  `/admin/seo-orders`, and generated reports at `/admin/seo-reports`. Initial
+  pricing (Wiki/Editorial $0.05, Web 2.0 $0.01, DA 70+ $0.10, Redirect
+  $0.001 per placement) comes from `SeoServiceSeeder` and is editable from
+  there afterward — price changes never touch existing orders' locked-in
+  unit price.
+- **Report files** are stored on the `local` disk (`storage/app/private/`,
+  same as marketplace order delivery files) — not public, served only
+  through the authenticated/authorized download routes.
+
 ## Ongoing deploys
 
 Every future code change: push to `main` on GitHub, then cPanel → **Git

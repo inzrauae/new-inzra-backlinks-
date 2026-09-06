@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function seoOrders(): HasMany
+    {
+        return $this->hasMany(SeoOrder::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === UserRole::Admin;

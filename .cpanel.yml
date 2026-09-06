@@ -8,6 +8,8 @@ deployment:
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan migrate --force
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan db:seed --class=ProductCategorySeeder --force
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan db:seed --class=ProductSeeder --force
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan db:seed --class=CountrySeeder --force
+    - /usr/local/bin/php /home/seoweb/inzra-app/artisan db:seed --class=SeoServiceSeeder --force
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan config:cache
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan route:cache
     - /usr/local/bin/php /home/seoweb/inzra-app/artisan view:cache

@@ -89,6 +89,37 @@ class PayPalClient
     }
 
     /**
+     * Create a PayPal order for an arbitrary amount/description, for callers
+     * that aren't checking out a marketplace Order (e.g. SEO service orders).
+     */
+    public function createOrderForAmount(string $referenceId, string $customId, string $currency, float $amount, string $description): array
+    {
+        $response = Http::withToken($this->accessToken())
+            ->post("{$this->baseUrl()}/v2/checkout/orders", [
+                'intent' => 'CAPTURE',
+                'purchase_units' => [[
+                    'reference_id' => $referenceId,
+                    'custom_id' => $customId,
+                    'description' => $description,
+                    'amount' => [
+                        'currency_code' => $currency,
+                        'value' => number_format($amount, 2, '.', ''),
+                    ],
+                ]],
+                'application_context' => [
+                    'shipping_preference' => 'NO_SHIPPING',
+                    'user_action' => 'PAY_NOW',
+                ],
+            ]);
+
+        if ($response->failed()) {
+            throw new RuntimeException('PayPal order creation failed: '.$response->body());
+        }
+
+        return $response->json();
+    }
+
+    /**
      * Capture an approved PayPal order. Returns the decoded response.
      */
     public function captureOrder(string $paypalOrderId): array

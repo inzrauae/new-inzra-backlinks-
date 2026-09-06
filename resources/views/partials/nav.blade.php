@@ -12,7 +12,7 @@
     <nav class="nav__links" id="navLinks" aria-label="Primary">
       <a href="{{ url('/') }}" class="nav__link {{ $active === 'home' ? 'is-active' : '' }}">Home</a>
       <a href="{{ route('marketplace') }}" class="nav__link {{ $active === 'marketplace' ? 'is-active' : '' }}">Marketplace</a>
-      <a href="{{ route('categories') }}" class="nav__link {{ $active === 'categories' ? 'is-active' : '' }}">Categories</a>
+      <a href="{{ route('seo-backlink-services.index') }}" class="nav__link {{ $active === 'seo-backlink-services' ? 'is-active' : '' }}">Backlink Services</a>
       <a href="{{ route('pricing') }}" class="nav__link {{ $active === 'pricing' ? 'is-active' : '' }}">Pricing</a>
       <a href="{{ route('blog.index') }}" class="nav__link {{ $active === 'blog' ? 'is-active' : '' }}">Blog</a>
       <a href="{{ route('tools.index') }}" class="nav__link {{ $active === 'tools' ? 'is-active' : '' }}">Tools</a>

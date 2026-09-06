@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Models\Product;
+use App\Models\SeoService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
@@ -23,6 +24,7 @@ class SitemapController extends Controller
                 ['loc' => route('pricing'), 'priority' => '0.8', 'changefreq' => 'monthly'],
                 ['loc' => route('blog.index'), 'priority' => '0.7', 'changefreq' => 'weekly'],
                 ['loc' => route('contact'), 'priority' => '0.6', 'changefreq' => 'monthly'],
+                ['loc' => route('seo-backlink-services.index'), 'priority' => '0.8', 'changefreq' => 'monthly'],
             ];
 
             foreach (array_keys(config('markets')) as $marketSlug) {
@@ -30,6 +32,15 @@ class SitemapController extends Controller
                     'loc' => route('markets.show', $marketSlug),
                     'priority' => '0.6',
                     'changefreq' => 'monthly',
+                ];
+            }
+
+            foreach (SeoService::where('is_active', true)->get() as $service) {
+                $urls[] = [
+                    'loc' => route('seo-backlink-services.show', $service),
+                    'priority' => '0.7',
+                    'changefreq' => 'monthly',
+                    'lastmod' => $service->updated_at->toDateString(),
                 ];
             }
 

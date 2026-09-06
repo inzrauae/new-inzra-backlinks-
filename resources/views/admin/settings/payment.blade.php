@@ -2,6 +2,7 @@
 
 <section class="section">
   <div class="container container--narrow">
+    @include('partials.admin.subnav', ['adminActive' => 'payment'])
     <p class="pdp__crumb reveal"><a href="{{ route('admin.dashboard') }}">Admin</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> Payment settings</p>
 
     <header class="section__head reveal">

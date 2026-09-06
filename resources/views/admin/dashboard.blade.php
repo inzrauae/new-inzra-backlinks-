@@ -2,6 +2,7 @@
 
 <section class="section">
   <div class="container">
+    @include('partials.admin.subnav', ['adminActive' => 'dashboard'])
     <header class="section__head reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;">
       <div>
         <p class="eyebrow"><span class="dot"></span> Admin</p>
@@ -42,7 +43,7 @@
       <a href="{{ route('admin.orders.index') }}" class="btn btn--glass btn--sm">Manage all orders</a>
     </div>
 
-    <div class="auth-card glass reveal" style="overflow-x:auto;">
+    <div class="auth-card glass reveal" style="overflow-x:auto; margin-bottom:44px;">
       <table style="width:100%; border-collapse:collapse;">
         <thead>
           <tr style="text-align:left; border-bottom:1px solid var(--line);">
@@ -65,6 +66,72 @@
               <td style="padding:10px 12px;"><a href="{{ route('admin.orders.show', $order) }}" class="auth-link">Manage</a></td>
             </tr>
           @endforeach
+        </tbody>
+      </table>
+    </div>
+
+    <header class="section__head reveal">
+      <p class="eyebrow"><span class="dot"></span> SEO Backlink Services</p>
+      <h2 class="section__title" style="font-size:1.5rem;">SEO orders overview</h2>
+    </header>
+
+    <div class="stats glass reveal" style="margin-bottom:44px;">
+      <div class="stat">
+        <span class="stat__num">{{ $seoCounts['orders'] }}</span>
+        <span class="stat__label">SEO orders</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">{{ $seoCounts['pending'] }}</span>
+        <span class="stat__label">Pending</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">{{ $seoCounts['in_progress'] }}</span>
+        <span class="stat__label">In progress</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">{{ $seoCounts['completed'] }}</span>
+        <span class="stat__label">Completed</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">${{ number_format((float) $seoCounts['revenue'], 2) }}</span>
+        <span class="stat__label">SEO revenue</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">{{ $seoCounts['customers'] }}</span>
+        <span class="stat__label">Active customers</span>
+      </div>
+    </div>
+
+    <div class="reveal" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+      <h3 style="font-family:var(--font-display); font-size:1.3rem;">Recent SEO orders</h3>
+      <a href="{{ route('admin.seo-orders.index') }}" class="btn btn--glass btn--sm">Manage all SEO orders</a>
+    </div>
+
+    <div class="auth-card glass reveal" style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="text-align:left; border-bottom:1px solid var(--line);">
+            <th style="padding:10px 12px;">Order</th>
+            <th style="padding:10px 12px;">Customer</th>
+            <th style="padding:10px 12px;">Service</th>
+            <th style="padding:10px 12px;">Amount</th>
+            <th style="padding:10px 12px;">Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @forelse ($recentSeoOrders as $seoOrder)
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:10px 12px;">{{ $seoOrder->order_number }}</td>
+              <td style="padding:10px 12px;">{{ $seoOrder->user?->name }}</td>
+              <td style="padding:10px 12px;">{{ $seoOrder->service_name }}</td>
+              <td style="padding:10px 12px;">${{ number_format((float) $seoOrder->total, 2) }}</td>
+              <td style="padding:10px 12px;">{{ $seoOrder->order_status->label() }}</td>
+              <td style="padding:10px 12px;"><a href="{{ route('admin.seo-orders.show', $seoOrder) }}" class="auth-link">Manage</a></td>
+            </tr>
+          @empty
+            <tr><td colspan="6" style="padding:20px 12px; color:var(--text-2);">No SEO orders yet.</td></tr>
+          @endforelse
         </tbody>
       </table>
     </div>
