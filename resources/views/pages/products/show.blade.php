@@ -53,10 +53,12 @@
           <p class="pdp__note">Online payment isn't configured yet. You can still place this order through WhatsApp.</p>
         @endif
 
-        <form id="whatsapp-order-form" method="GET" action="{{ route('orders.store', $product) }}">
-          <button type="submit" class="btn btn--glass btn--lg btn--block"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Order via WhatsApp</button>
-        </form>
-        <p class="pdp__note">Your product, target URL, and anchor preference will be attached to the order for our team.</p>
+        @unless ($paypal->enabled && $paypal->client_id)
+          <form id="whatsapp-order-form" method="GET" action="{{ route('orders.store', $product) }}">
+            <button type="submit" class="btn btn--glass btn--lg btn--block"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Order via WhatsApp</button>
+          </form>
+          <p class="pdp__note">Your product, target URL, and anchor preference will be attached to the order for our team.</p>
+        @endunless
 
         <div class="pdp__cta-row" style="margin-top:8px;">
           <button class="pdp__watch pkg__wish" type="button" aria-label="Add {{ $product->name }} to watchlist" aria-pressed="false"><i class="fa-regular fa-heart" aria-hidden="true"></i> Watchlist</button>
