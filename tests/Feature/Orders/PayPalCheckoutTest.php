@@ -4,12 +4,15 @@ namespace Tests\Feature\Orders;
 
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Mail\OrderPlacedAdminNotification;
+use App\Mail\OrderReceived;
 use App\Models\Order;
 use App\Models\PaymentSetting;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class PayPalCheckoutTest extends TestCase
@@ -92,6 +95,7 @@ class PayPalCheckoutTest extends TestCase
 
     public function test_capturing_a_paypal_order_marks_it_paid_and_confirmed(): void
     {
+        Mail::fake();
         $this->enablePayPal();
         $user = User::factory()->create();
         $product = Product::factory()->create();
@@ -135,6 +139,13 @@ class PayPalCheckoutTest extends TestCase
         // array encodes to a JSON array, not an object) with a 400 "not
         // well-formed" schema error — assert we send `{}`, not `[]`.
         Http::assertSent(fn ($request) => str_contains($request->url(), '/capture') && $request->body() === '{}');
+
+        // Both mailables implement ShouldQueue, so Laravel always queues
+        // them (even via ->send()) rather than sending inline — assert
+        // queued, not sent. QUEUE_CONNECTION=sync in production means they
+        // still go out immediately in practice.
+        Mail::assertQueued(OrderReceived::class, fn ($mail) => $mail->hasTo($user->email) && $mail->order->id === $order->id);
+        Mail::assertQueued(OrderPlacedAdminNotification::class, fn ($mail) => $mail->hasTo(config('inzra.order_notification_email')) && $mail->order->id === $order->id);
     }
 
     public function test_a_customer_cannot_capture_another_customers_paypal_order(): void

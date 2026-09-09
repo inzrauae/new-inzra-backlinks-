@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreatePendingOrder;
 use App\Actions\CreatePendingOrderFromCart;
-use App\Enums\OrderStatus;
+use App\Actions\MarkOrderPaid;
 use App\Enums\PaymentMethod;
-use App\Enums\PaymentStatus;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 use App\Models\Product;
@@ -91,7 +90,7 @@ class PayPalController extends Controller
         return response()->json(['id' => $paypalOrder['id']]);
     }
 
-    public function captureOrder(string $paypalOrderId): JsonResponse
+    public function captureOrder(string $paypalOrderId, MarkOrderPaid $markOrderPaid): JsonResponse
     {
         $order = Order::where('paypal_order_id', $paypalOrderId)
             ->where('user_id', Auth::id())
@@ -108,11 +107,9 @@ class PayPalController extends Controller
         }
 
         if (($result['status'] ?? null) === 'COMPLETED') {
-            $order->update([
-                'status' => OrderStatus::Confirmed,
-                'payment_status' => PaymentStatus::Paid,
-                'paid_at' => now(),
-            ]);
+            $markOrderPaid->handle($order);
+
+            session()->flash('status', 'Thank you for your order! Add each item\'s target URL, anchor text and target country below so we can get started.');
         }
 
         return response()->json([

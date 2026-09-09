@@ -82,7 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
     })
       .then(function (res) { return res.json(); })
       .then(function (result) {
-        if (result.redirect) { window.location.href = result.redirect; }
+        if (result.error) { throw new Error(result.error); }
+        if (result.redirect) {
+          window.location.href = result.redirect;
+        } else {
+          throw new Error('Payment could not be confirmed. Please try again.');
+        }
       });
   }
 

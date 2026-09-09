@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\MarkOrderPaid;
 use App\Actions\RecordSeoOrderStatusChange;
-use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\SeoOrderStatus;
 use App\Mail\SeoOrderReceived;
@@ -119,11 +119,7 @@ class PayPalWebhookController extends Controller
     private function applyCaptureEvent(Order $order, string $event): void
     {
         match ($event) {
-            'PAYMENT.CAPTURE.COMPLETED' => $order->update([
-                'status' => OrderStatus::Confirmed,
-                'payment_status' => PaymentStatus::Paid,
-                'paid_at' => $order->paid_at ?? now(),
-            ]),
+            'PAYMENT.CAPTURE.COMPLETED' => (new MarkOrderPaid)->handle($order),
             'PAYMENT.CAPTURE.DENIED' => $order->update([
                 'payment_status' => PaymentStatus::Unpaid,
             ]),

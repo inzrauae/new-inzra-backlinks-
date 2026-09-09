@@ -11,6 +11,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Order notifications
+    |--------------------------------------------------------------------------
+    |
+    | Internal mailbox that gets a copy of every paid marketplace order's
+    | details, alongside the customer's own confirmation email.
+    |
+    */
+    'order_notification_email' => env('ORDER_NOTIFICATION_EMAIL', 'paypal@inzra.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Featured products
     |--------------------------------------------------------------------------
     |
