@@ -33,15 +33,6 @@
               <tr style="border-bottom:1px solid var(--line);">
                 <td style="padding:10px 12px;">
                   <a href="{{ route('products.show', $line['product']) }}" class="auth-link">{{ $line['product']->name }}</a>
-                  @if ($line['target_url'])
-                    <div style="font-size:.82rem; color:var(--text-2);">Target: {{ $line['target_url'] }}</div>
-                  @endif
-                  @if ($line['anchor_text'])
-                    <div style="font-size:.82rem; color:var(--text-2);">Anchor: {{ $line['anchor_text'] }}</div>
-                  @endif
-                  @if ($line['target_country'])
-                    <div style="font-size:.82rem; color:var(--text-2);">Country: {{ $line['target_country'] }}</div>
-                  @endif
                 </td>
                 <td style="padding:10px 12px;">
                   <form method="POST" action="{{ route('cart.update', $line['line_id']) }}" style="display:flex; align-items:center; gap:8px;">

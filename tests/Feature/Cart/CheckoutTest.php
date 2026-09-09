@@ -84,7 +84,7 @@ class CheckoutTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create(['price' => 15]);
 
-        $this->actingAs($user)->get("/cart/add/{$product->slug}?target_url=https%3A%2F%2Fexample.com");
+        $this->actingAs($user)->get("/cart/add/{$product->slug}");
 
         $response = $this->actingAs($user)->post('/checkout/whatsapp');
 
@@ -98,7 +98,7 @@ class CheckoutTest extends TestCase
         ]);
         $this->assertDatabaseHas('order_items', [
             'product_id' => $product->id,
-            'target_url' => 'https://example.com',
+            'target_url' => null,
         ]);
 
         $this->assertEmpty(session('cart', []));

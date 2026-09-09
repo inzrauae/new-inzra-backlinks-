@@ -33,23 +33,6 @@
         <p class="pdp__price">${{ $product->formatted_price }}</p>
 
         <div class="auth-group">
-          <label class="auth-label" for="target_url">Target URL <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <input type="url" name="target_url" id="target_url" class="auth-input" form="cart-add-form" placeholder="https://yoursite.com/page">
-        </div>
-        <div class="auth-group">
-          <label class="auth-label" for="anchor_text">Anchor text preference <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <input type="text" name="anchor_text" id="anchor_text" class="auth-input" form="cart-add-form" placeholder="e.g. best seo backlinks">
-        </div>
-        <div class="auth-group">
-          <label class="auth-label" for="target_country">Target country <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <select name="target_country" id="target_country" class="auth-input" form="cart-add-form">
-            <option value="">Select a country…</option>
-            @foreach ($countries as $country)
-              <option value="{{ $country->name }}">{{ $country->name }}</option>
-            @endforeach
-          </select>
-        </div>
-        <div class="auth-group">
           <label class="auth-label" for="quantity">Quantity</label>
           <input type="number" name="quantity" id="quantity" class="auth-input" form="cart-add-form" value="1" min="1" max="100" style="max-width:120px;">
         </div>
@@ -58,7 +41,7 @@
           <button type="submit" class="btn btn--primary btn--lg btn--block ripple"><i class="fa-solid fa-cart-plus" aria-hidden="true"></i> Add to Cart</button>
         </form>
         <p class="pdp__note"><i class="fa-solid fa-lock" aria-hidden="true"></i> Secure checkout with PayPal</p>
-        <p class="pdp__note">Your product, target URL, anchor preference and target country will be attached to this cart item.</p>
+        <p class="pdp__note">You'll add the target URL, anchor text and target country from your order page after checkout.</p>
 
         <div class="pdp__cta-row" style="margin-top:8px;">
           <button class="pdp__watch pkg__wish" type="button" aria-label="Add {{ $product->name }} to watchlist" aria-pressed="false"><i class="fa-regular fa-heart" aria-hidden="true"></i> Watchlist</button>

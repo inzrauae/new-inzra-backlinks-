@@ -27,9 +27,6 @@ class CartController extends Controller
         Cart::add(
             product: $product,
             quantity: (int) $request->validated('quantity', 1),
-            targetUrl: $request->validated('target_url'),
-            anchorText: $request->validated('anchor_text'),
-            targetCountry: $request->validated('target_country'),
         );
 
         if ($request->wantsJson()) {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
 use App\Models\Product;
 use App\Support\SeoData;
 use Illuminate\View\View;
@@ -21,7 +20,6 @@ class ProductController extends Controller
             'seo' => SeoData::forProduct($product),
             'product' => $product,
             'related' => $related,
-            'countries' => Country::orderBy('sort_order')->orderBy('name')->get(),
         ]);
     }
 }

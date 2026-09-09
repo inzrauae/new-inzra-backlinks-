@@ -11,16 +11,13 @@ final class Cart
 {
     private const SESSION_KEY = 'cart';
 
-    public static function add(Product $product, int $quantity, ?string $targetUrl, ?string $anchorText, ?string $targetCountry): void
+    public static function add(Product $product, int $quantity): void
     {
         $cart = Session::get(self::SESSION_KEY, []);
 
         $cart[(string) Str::uuid()] = [
             'product_id' => $product->id,
             'quantity' => max(1, $quantity),
-            'target_url' => $targetUrl,
-            'anchor_text' => $anchorText,
-            'target_country' => $targetCountry,
         ];
 
         Session::put(self::SESSION_KEY, $cart);
@@ -71,9 +68,6 @@ final class Cart
                     'line_id' => $lineId,
                     'product' => $product,
                     'quantity' => $line['quantity'],
-                    'target_url' => $line['target_url'],
-                    'anchor_text' => $line['anchor_text'],
-                    'target_country' => $line['target_country'],
                     'subtotal' => (float) $product->price * $line['quantity'],
                 ];
             })

@@ -9,6 +9,10 @@
       <p class="section__sub">Placed {{ $order->created_at->format('j F Y, g:ia') }}</p>
     </header>
 
+    @if (session('status'))
+      <div class="auth-status reveal">{{ session('status') }}</div>
+    @endif
+
     <div class="auth-card glass reveal" style="margin-bottom:24px;">
       <div class="pdp__specs-table">
         <div class="pdp__spec"><span>Order status</span><b>{{ $order->status->label() }}</b></div>
@@ -42,15 +46,6 @@
                 @else
                   {{ $item->product_name }}
                 @endif
-                @if ($item->target_url)
-                  <div style="font-size:.82rem; color:var(--text-2);">Target: {{ $item->target_url }}</div>
-                @endif
-                @if ($item->anchor_text)
-                  <div style="font-size:.82rem; color:var(--text-2);">Anchor: {{ $item->anchor_text }}</div>
-                @endif
-                @if ($item->target_country)
-                  <div style="font-size:.82rem; color:var(--text-2);">Country: {{ $item->target_country }}</div>
-                @endif
               </td>
               <td style="padding:10px 12px;">{{ $item->sku }}</td>
               <td style="padding:10px 12px;">{{ $item->quantity }}</td>
@@ -60,6 +55,40 @@
           @endforeach
         </tbody>
       </table>
+    </div>
+
+    <div class="auth-card glass reveal" style="margin-bottom:24px;">
+      <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:4px;">Order details</h3>
+      <p class="pdp__note" style="margin-bottom:16px;">Tell us where each backlink should point so our team can get started.</p>
+
+      @foreach ($order->items as $item)
+        <form method="POST" action="{{ route('orders.items.update', [$order, $item]) }}" style="margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--line);">
+          @csrf
+          @method('patch')
+
+          <p style="font-weight:600; margin-bottom:12px;">{{ $item->product_name }}</p>
+
+          <div class="auth-group">
+            <label class="auth-label" for="target_url_{{ $item->id }}">Target URL <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
+            <input type="url" name="target_url" id="target_url_{{ $item->id }}" class="auth-input" value="{{ old('target_url', $item->target_url) }}" placeholder="https://yoursite.com/page">
+          </div>
+          <div class="auth-group">
+            <label class="auth-label" for="anchor_text_{{ $item->id }}">Anchor text preference <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
+            <input type="text" name="anchor_text" id="anchor_text_{{ $item->id }}" class="auth-input" value="{{ old('anchor_text', $item->anchor_text) }}" placeholder="e.g. best seo backlinks">
+          </div>
+          <div class="auth-group">
+            <label class="auth-label" for="target_country_{{ $item->id }}">Target country <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
+            <select name="target_country" id="target_country_{{ $item->id }}" class="auth-input">
+              <option value="">Select a country…</option>
+              @foreach ($countries as $country)
+                <option value="{{ $country->name }}" @selected(old('target_country', $item->target_country) === $country->name)>{{ $country->name }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn--primary ripple">Save details</button>
+        </form>
+      @endforeach
     </div>
 
     @if ($order->delivery_url || $order->delivery_file_path)

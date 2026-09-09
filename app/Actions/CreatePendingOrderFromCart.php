@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\DB;
 class CreatePendingOrderFromCart
 {
     /**
-     * @param  Collection  $lines  Cart::lines() — each entry has 'product', 'quantity', 'target_url', 'anchor_text', 'target_country', 'subtotal'
+     * @param  Collection  $lines  Cart::lines() — each entry has 'product', 'quantity', 'subtotal'.
+     *                             Target URL/anchor text/target country aren't collected at
+     *                             checkout — the buyer fills them in per item from their order
+     *                             page afterward (see OrderController::updateItemDetails).
      */
     public function handle(User $user, Collection $lines, PaymentMethod $paymentMethod): Order
     {
@@ -43,9 +46,6 @@ class CreatePendingOrderFromCart
                     'price' => $line['product']->price,
                     'quantity' => $line['quantity'],
                     'subtotal' => $line['subtotal'],
-                    'target_url' => $line['target_url'],
-                    'anchor_text' => $line['anchor_text'],
-                    'target_country' => $line['target_country'],
                 ]);
             }
 

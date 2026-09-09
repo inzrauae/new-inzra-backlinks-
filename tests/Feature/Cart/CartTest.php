@@ -25,7 +25,7 @@ class CartTest extends TestCase
         $product = Product::factory()->create();
         $user = User::factory()->create();
 
-        $this->get("/cart/add/{$product->slug}?target_url=https%3A%2F%2Fexample.com&anchor_text=hello");
+        $this->get("/cart/add/{$product->slug}?quantity=3");
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -36,25 +36,22 @@ class CartTest extends TestCase
         $location = $response->headers->get('Location');
         $this->assertStringContainsString("/cart/add/{$product->slug}?", $location);
         parse_str(parse_url($location, PHP_URL_QUERY), $query);
-        $this->assertSame('https://example.com', $query['target_url']);
-        $this->assertSame('hello', $query['anchor_text']);
+        $this->assertSame('3', $query['quantity']);
     }
 
     public function test_a_logged_in_user_can_add_a_product_to_their_cart(): void
     {
-        $product = Product::factory()->create(['name' => 'Guest Post on a DA70 Site']);
+        $product = Product::factory()->create(['name' => 'Guest Post on a DA70 Site', 'price' => 20]);
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get("/cart/add/{$product->slug}?target_url=https%3A%2F%2Fexample.com&anchor_text=best+seo&target_country=Sri+Lanka&quantity=2");
+        $response = $this->actingAs($user)->get("/cart/add/{$product->slug}?quantity=2");
 
         $response->assertRedirect(route('cart.index'));
 
         $cartResponse = $this->get('/cart');
         $cartResponse->assertOk();
         $cartResponse->assertSee('Guest Post on a DA70 Site');
-        $cartResponse->assertSee('https://example.com');
-        $cartResponse->assertSee('best seo');
-        $cartResponse->assertSee('Sri Lanka');
+        $cartResponse->assertSee('Total: $40.00', false);
     }
 
     public function test_adding_to_cart_via_ajax_returns_json_with_the_new_count(): void

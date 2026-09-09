@@ -8,7 +8,8 @@
     </header>
 
     <div class="auth-card glass reveal" style="overflow-x:auto; margin-bottom:24px;">
-      <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:16px;">Order summary</h3>
+      <h3 style="font-family:var(--font-display); font-size:1.1rem; margin-bottom:4px;">Order summary</h3>
+      <p class="pdp__note" style="margin-bottom:16px;">You'll add each item's target URL, anchor text and target country from your order page after you complete this purchase.</p>
       <table style="width:100%; border-collapse:collapse;">
         <thead>
           <tr style="text-align:left; border-bottom:1px solid var(--line);">
@@ -20,18 +21,7 @@
         <tbody>
           @foreach ($lines as $line)
             <tr style="border-bottom:1px solid var(--line);">
-              <td style="padding:10px 12px;">
-                {{ $line['product']->name }}
-                @if ($line['target_url'])
-                  <div style="font-size:.82rem; color:var(--text-2);">Target: {{ $line['target_url'] }}</div>
-                @endif
-                @if ($line['anchor_text'])
-                  <div style="font-size:.82rem; color:var(--text-2);">Anchor: {{ $line['anchor_text'] }}</div>
-                @endif
-                @if ($line['target_country'])
-                  <div style="font-size:.82rem; color:var(--text-2);">Country: {{ $line['target_country'] }}</div>
-                @endif
-              </td>
+              <td style="padding:10px 12px;">{{ $line['product']->name }}</td>
               <td style="padding:10px 12px;">{{ $line['quantity'] }}</td>
               <td style="padding:10px 12px;">${{ number_format($line['subtotal'], 2) }}</td>
             </tr>
