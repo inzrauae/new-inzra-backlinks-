@@ -130,6 +130,11 @@ class PayPalCheckoutTest extends TestCase
         $this->assertSame(OrderStatus::Confirmed, $order->status);
         $this->assertSame(PaymentStatus::Paid, $order->payment_status);
         $this->assertNotNull($order->paid_at);
+
+        // PayPal's capture endpoint rejects a body of `[]` (an empty PHP
+        // array encodes to a JSON array, not an object) with a 400 "not
+        // well-formed" schema error — assert we send `{}`, not `[]`.
+        Http::assertSent(fn ($request) => str_contains($request->url(), '/capture') && $request->body() === '{}');
     }
 
     public function test_a_customer_cannot_capture_another_customers_paypal_order(): void

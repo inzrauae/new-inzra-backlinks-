@@ -5,6 +5,15 @@
 
     RewriteEngine On
 
+    # Force https and the non-www apex domain — without this, http:// and
+    # www. both serve the same content as separate 200 OK pages, each with
+    # its own self-referencing canonical tag (see AppServiceProvider),
+    # which splits search ranking signals across near-duplicate URLs
+    # instead of consolidating them onto https://inzra.com.
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://inzra.com%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

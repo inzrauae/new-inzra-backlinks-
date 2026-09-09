@@ -124,8 +124,11 @@ class PayPalClient
      */
     public function captureOrder(string $paypalOrderId): array
     {
+        // PayPal's capture endpoint rejects a body of `[]` (an empty PHP
+        // array json_encodes to a JSON array, not an object) with a 400
+        // "not well-formed" schema error — pass an empty object instead.
         $response = Http::withToken($this->accessToken())
-            ->post("{$this->baseUrl()}/v2/checkout/orders/{$paypalOrderId}/capture");
+            ->post("{$this->baseUrl()}/v2/checkout/orders/{$paypalOrderId}/capture", (object) []);
 
         if ($response->failed()) {
             throw new RuntimeException('PayPal capture failed: '.$response->body());

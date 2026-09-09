@@ -1,0 +1,25 @@
+# INZRA
+
+> INZRA is a marketplace for buying verified, high-authority SEO backlinks and link-building services — guest posts, niche edits, and EDU/GOV links with disclosed DA/DR metrics from vetted publisher sites, plus a managed backlink-campaign service.
+
+INZRA operates two ways to get a backlink: a self-serve marketplace of individually priced, ready-to-buy placements on specific publisher sites, and a managed service where INZRA's team sources and places links to a target URL/keyword brief. Publisher sites are vetted before listing (real traffic, active content) and metrics shown per listing are checked at listing time. Payment is via PayPal (including guest card checkout) or WhatsApp order. Support: support@inzra.com.
+
+## Marketplace
+
+- [Marketplace](https://inzra.com/marketplace): Browse individual backlink placements by publisher, filterable by category, DA/DR, and price.
+- [Categories](https://inzra.com/categories): Publisher site categories available in the marketplace.
+- [Markets](https://inzra.com/markets): Backlink placements grouped by target country/region.
+
+## Managed service
+
+- [Backlink Services](https://inzra.com/seo-backlink-services): Managed link-building campaigns — submit a target URL and keywords, INZRA sources and places the links.
+- [Pricing](https://inzra.com/pricing): Managed-service plan tiers and pricing.
+
+## Learn more
+
+- [Blog](https://inzra.com/blog): Educational articles on link building and SEO, one per marketplace category.
+- [Contact](https://inzra.com/contact): Support and business contact details.
+
+## Free tools
+
+- [Tools](https://inzra.com/tools): Free browser-based utilities (no upload to a server) — an image converter and a PDF editor.

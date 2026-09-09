@@ -58,7 +58,6 @@ final readonly class SeoData
                     'url' => url('/'),
                     'image' => asset('og-cover.svg'),
                     'sameAs' => ['https://twitter.com/inzra', 'https://linkedin.com/company/inzra'],
-                    'aggregateRating' => ['@type' => 'AggregateRating', 'ratingValue' => '4.9', 'reviewCount' => '2841', 'bestRating' => '5', 'worstRating' => '1'],
                     'areaServed' => 'Worldwide',
                 ],
                 self::breadcrumb([['name' => 'Home', 'item' => url('/')]]),
