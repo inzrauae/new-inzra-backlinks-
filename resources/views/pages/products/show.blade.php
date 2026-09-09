@@ -34,40 +34,31 @@
 
         <div class="auth-group">
           <label class="auth-label" for="target_url">Target URL <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <input type="url" name="target_url" id="target_url" class="auth-input" form="whatsapp-order-form" placeholder="https://yoursite.com/page">
+          <input type="url" name="target_url" id="target_url" class="auth-input" form="cart-add-form" placeholder="https://yoursite.com/page">
         </div>
         <div class="auth-group">
           <label class="auth-label" for="anchor_text">Anchor text preference <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <input type="text" name="anchor_text" id="anchor_text" class="auth-input" form="whatsapp-order-form" placeholder="e.g. best seo backlinks">
+          <input type="text" name="anchor_text" id="anchor_text" class="auth-input" form="cart-add-form" placeholder="e.g. best seo backlinks">
         </div>
         <div class="auth-group">
           <label class="auth-label" for="target_country">Target country <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
-          <select name="target_country" id="target_country" class="auth-input" form="whatsapp-order-form">
+          <select name="target_country" id="target_country" class="auth-input" form="cart-add-form">
             <option value="">Select a country…</option>
             @foreach ($countries as $country)
               <option value="{{ $country->name }}">{{ $country->name }}</option>
             @endforeach
           </select>
         </div>
+        <div class="auth-group">
+          <label class="auth-label" for="quantity">Quantity</label>
+          <input type="number" name="quantity" id="quantity" class="auth-input" form="cart-add-form" value="1" min="1" max="100" style="max-width:120px;">
+        </div>
 
-        @if ($paypal->enabled && $paypal->client_id)
-          @auth
-            <div id="paypal-button-container" data-create-url="{{ route('paypal.orders.create', $product) }}"></div>
-            <p class="pdp__note">You'll be redirected to PayPal to complete your payment securely.</p>
-          @else
-            <a href="{{ route('login') }}" class="btn btn--primary btn--lg btn--block ripple"><i class="fa-brands fa-paypal" aria-hidden="true"></i> Log in to pay with PayPal</a>
-            <p class="pdp__note">You'll be asked to log in first, then redirected to PayPal to pay.</p>
-          @endauth
-        @else
-          <p class="pdp__note">Online payment isn't configured yet. You can still place this order through WhatsApp.</p>
-        @endif
-
-        @unless ($paypal->enabled && $paypal->client_id)
-          <form id="whatsapp-order-form" method="GET" action="{{ route('orders.store', $product) }}">
-            <button type="submit" class="btn btn--glass btn--lg btn--block"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Order via WhatsApp</button>
-          </form>
-          <p class="pdp__note">Your product, target URL, and anchor preference will be attached to the order for our team.</p>
-        @endunless
+        <form id="cart-add-form" method="GET" action="{{ route('cart.add', $product) }}">
+          <button type="submit" class="btn btn--primary btn--lg btn--block ripple"><i class="fa-solid fa-cart-plus" aria-hidden="true"></i> Add to Cart</button>
+        </form>
+        <p class="pdp__note"><i class="fa-solid fa-lock" aria-hidden="true"></i> Secure checkout with PayPal</p>
+        <p class="pdp__note">Your product, target URL, anchor preference and target country will be attached to this cart item.</p>
 
         <div class="pdp__cta-row" style="margin-top:8px;">
           <button class="pdp__watch pkg__wish" type="button" aria-label="Add {{ $product->name }} to watchlist" aria-pressed="false"><i class="fa-regular fa-heart" aria-hidden="true"></i> Watchlist</button>
@@ -131,56 +122,64 @@
 </section>
 
 @auth
-@if ($paypal->enabled && $paypal->client_id)
-  @push('scripts')
-  <script src="https://www.paypal.com/sdk/js?client-id={{ $paypal->client_id }}&currency={{ $product->currency }}"></script>
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var container = document.getElementById('paypal-button-container');
-    if (!container || typeof paypal === 'undefined') return;
-    var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+<div id="cartToast" class="auth-status" role="status" aria-live="polite" hidden style="position:fixed; top:90px; right:20px; z-index:9999; max-width:320px; box-shadow:var(--sh-lg); transition:opacity .2s, transform .2s;"></div>
 
-    paypal.Buttons({
-      style: { layout: 'horizontal', color: 'gold', shape: 'pill', label: 'paypal', height: 45 },
-      createOrder: function () {
-        var targetUrl = document.getElementById('target_url').value;
-        var anchorText = document.getElementById('anchor_text').value;
-        var targetCountry = document.getElementById('target_country').value;
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('cart-add-form');
+  var toast = document.getElementById('cartToast');
+  if (!form || !toast) return;
 
-        return fetch(container.dataset.createUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({ target_url: targetUrl, anchor_text: anchorText, target_country: targetCountry })
-        })
-          .then(function (res) { return res.json(); })
-          .then(function (data) {
-            if (data.error) { throw new Error(data.error); }
-            return data.id;
-          });
-      },
-      onApprove: function (data) {
-        return fetch('/paypal/orders/' + data.orderID + '/capture', {
-          method: 'POST',
-          headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' }
-        })
-          .then(function (res) { return res.json(); })
-          .then(function (result) {
-            if (result.redirect) { window.location.href = result.redirect; }
-          });
-      },
-      onError: function (err) {
-        console.error('PayPal checkout error', err);
-        alert('Something went wrong starting PayPal checkout. Please try again in a moment.');
-      }
-    }).render('#paypal-button-container');
+  var toastTimer = null;
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.hidden = false;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-8px)';
+      setTimeout(function () { toast.hidden = true; }, 200);
+    }, 3000);
+  }
+
+  function updateCartCount(count) {
+    var desktopBadge = document.getElementById('navCartCount');
+    var mobileBadge = document.getElementById('navCartCountMobile');
+    if (desktopBadge) {
+      desktopBadge.textContent = count;
+      desktopBadge.hidden = count <= 0;
+    }
+    if (mobileBadge) {
+      mobileBadge.textContent = count;
+    }
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var params = new URLSearchParams(new FormData(form));
+
+    fetch(form.action + '?' + params.toString(), {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+      credentials: 'same-origin'
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        showToast(data.message || 'Added to your cart.');
+        if (typeof data.count === 'number') { updateCartCount(data.count); }
+      })
+      .catch(function () {
+        showToast('Something went wrong adding this to your cart.');
+      });
   });
-  </script>
-  @endpush
-@endif
+});
+</script>
+@endpush
 @endauth
 
 </x-app-layout>

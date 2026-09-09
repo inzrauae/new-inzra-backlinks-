@@ -10,7 +10,9 @@ use App\Http\Controllers\Admin\SeoPublicationImportController;
 use App\Http\Controllers\Admin\SeoReportController as AdminSeoReportController;
 use App\Http\Controllers\Admin\SeoServiceController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketController;
@@ -80,6 +82,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/paypal/orders/{product:slug}', [PayPalController::class, 'createOrder'])->name('paypal.orders.create');
     Route::post('/paypal/orders/{paypalOrderId}/capture', [PayPalController::class, 'captureOrder'])->name('paypal.orders.capture');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/add/{product:slug}', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/cart/{line}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{line}', [CartController::class, 'remove'])->name('cart.remove');
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/whatsapp', [CheckoutController::class, 'whatsapp'])->name('checkout.whatsapp');
+
+    Route::post('/paypal/cart/orders', [PayPalController::class, 'createCartOrder'])->name('paypal.cart-orders.create');
 
     Route::get('/seo-orders', [SeoOrderController::class, 'index'])->name('seo-orders.index');
     Route::get('/seo-orders/{seoOrder}', [SeoOrderController::class, 'show'])->name('seo-orders.show');

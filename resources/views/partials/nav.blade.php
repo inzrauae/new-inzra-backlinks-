@@ -1,4 +1,5 @@
 @php($active ??= null)
+@php($cartCount = auth()->check() ? \App\Support\Cart::count() : 0)
 <header class="nav" id="nav">
   <div class="container nav__inner">
 
@@ -25,6 +26,7 @@
           @if (Auth::user()->isAdmin())
             <a href="{{ route('admin.dashboard') }}" class="btn btn--ghost btn--block">Admin</a>
           @endif
+          <a href="{{ route('cart.index') }}" class="btn btn--ghost btn--block">Cart (<span id="navCartCountMobile">{{ $cartCount }}</span>)</a>
           <a href="{{ route('dashboard') }}" class="btn btn--ghost btn--block">Dashboard</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
@@ -42,6 +44,10 @@
         @if (Auth::user()->isAdmin())
           <a href="{{ route('admin.dashboard') }}" class="btn btn--ghost nav__login">Admin</a>
         @endif
+        <a href="{{ route('cart.index') }}" class="icon-btn nav__cart" aria-label="Cart" style="position:relative;">
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          <span id="navCartCount" style="position:absolute; top:-4px; right:-4px; background:var(--blue); color:#fff; font-size:.65rem; font-weight:700; line-height:1; padding:3px 5px; border-radius:var(--r-full); min-width:16px; text-align:center;" @if ($cartCount === 0) hidden @endif>{{ $cartCount }}</span>
+        </a>
         <a href="{{ route('dashboard') }}" class="btn btn--ghost nav__login">Dashboard</a>
         <form method="POST" action="{{ route('logout') }}">
           @csrf
