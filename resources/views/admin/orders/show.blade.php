@@ -41,6 +41,7 @@
                 {{ $item->product_name }}
                 @if ($item->target_url)<div style="font-size:.82rem; color:var(--text-2);">Target: {{ $item->target_url }}</div>@endif
                 @if ($item->anchor_text)<div style="font-size:.82rem; color:var(--text-2);">Anchor: {{ $item->anchor_text }}</div>@endif
+                @if ($item->target_country)<div style="font-size:.82rem; color:var(--text-2);">Country: {{ $item->target_country }}</div>@endif
               </td>
               <td style="padding:10px 12px;">{{ $item->sku }}</td>
               <td style="padding:10px 12px;">${{ number_format((float) $item->price, 2) }}</td>

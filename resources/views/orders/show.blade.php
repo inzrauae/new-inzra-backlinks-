@@ -48,6 +48,9 @@
                 @if ($item->anchor_text)
                   <div style="font-size:.82rem; color:var(--text-2);">Anchor: {{ $item->anchor_text }}</div>
                 @endif
+                @if ($item->target_country)
+                  <div style="font-size:.82rem; color:var(--text-2);">Country: {{ $item->target_country }}</div>
+                @endif
               </td>
               <td style="padding:10px 12px;">{{ $item->sku }}</td>
               <td style="padding:10px 12px;">{{ $item->quantity }}</td>

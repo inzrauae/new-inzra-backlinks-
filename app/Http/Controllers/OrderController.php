@@ -57,6 +57,7 @@ class OrderController extends Controller
             paymentMethod: PaymentMethod::WhatsApp,
             targetUrl: $request->validated('target_url'),
             anchorText: $request->validated('anchor_text'),
+            targetCountry: $request->validated('target_country'),
         );
 
         $order->load('items');

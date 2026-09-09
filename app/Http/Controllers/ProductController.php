@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\PaymentSetting;
 use App\Models\Product;
 use App\Support\SeoData;
@@ -22,6 +23,7 @@ class ProductController extends Controller
             'product' => $product,
             'related' => $related,
             'paypal' => PaymentSetting::paypal(),
+            'countries' => Country::orderBy('sort_order')->orderBy('name')->get(),
         ]);
     }
 }

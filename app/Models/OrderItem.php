@@ -20,6 +20,7 @@ class OrderItem extends Model
         'subtotal',
         'target_url',
         'anchor_text',
+        'target_country',
     ];
 
     protected function casts(): array

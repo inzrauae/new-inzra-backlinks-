@@ -30,6 +30,7 @@ class PayPalController extends Controller
             paymentMethod: PaymentMethod::PayPal,
             targetUrl: $request->validated('target_url'),
             anchorText: $request->validated('anchor_text'),
+            targetCountry: $request->validated('target_country'),
         );
 
         try {

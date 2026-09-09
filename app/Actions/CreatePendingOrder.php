@@ -18,8 +18,9 @@ class CreatePendingOrder
         PaymentMethod $paymentMethod,
         ?string $targetUrl = null,
         ?string $anchorText = null,
+        ?string $targetCountry = null,
     ): Order {
-        return DB::transaction(function () use ($user, $product, $paymentMethod, $targetUrl, $anchorText) {
+        return DB::transaction(function () use ($user, $product, $paymentMethod, $targetUrl, $anchorText, $targetCountry) {
             $order = Order::create([
                 'user_id' => $user->id,
                 'order_number' => Order::generateOrderNumber(),
@@ -43,6 +44,7 @@ class CreatePendingOrder
                 'subtotal' => $product->price,
                 'target_url' => $targetUrl,
                 'anchor_text' => $anchorText,
+                'target_country' => $targetCountry,
             ]);
 
             return $order;

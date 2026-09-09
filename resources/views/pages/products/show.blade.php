@@ -40,6 +40,15 @@
           <label class="auth-label" for="anchor_text">Anchor text preference <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
           <input type="text" name="anchor_text" id="anchor_text" class="auth-input" form="whatsapp-order-form" placeholder="e.g. best seo backlinks">
         </div>
+        <div class="auth-group">
+          <label class="auth-label" for="target_country">Target country <span style="font-weight:400; color:var(--text-2);">(optional)</span></label>
+          <select name="target_country" id="target_country" class="auth-input" form="whatsapp-order-form">
+            <option value="">Select a country…</option>
+            @foreach ($countries as $country)
+              <option value="{{ $country->name }}">{{ $country->name }}</option>
+            @endforeach
+          </select>
+        </div>
 
         @if ($paypal->enabled && $paypal->client_id)
           @auth
@@ -136,6 +145,7 @@
       createOrder: function () {
         var targetUrl = document.getElementById('target_url').value;
         var anchorText = document.getElementById('anchor_text').value;
+        var targetCountry = document.getElementById('target_country').value;
 
         return fetch(container.dataset.createUrl, {
           method: 'POST',
@@ -144,7 +154,7 @@
             'X-CSRF-TOKEN': csrfToken,
             'Accept': 'application/json'
           },
-          body: JSON.stringify({ target_url: targetUrl, anchor_text: anchorText })
+          body: JSON.stringify({ target_url: targetUrl, anchor_text: anchorText, target_country: targetCountry })
         })
           .then(function (res) { return res.json(); })
           .then(function (data) {

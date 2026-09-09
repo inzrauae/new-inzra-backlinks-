@@ -15,6 +15,7 @@ final class WhatsAppMessage
             'Order ref: '.$order->order_number,
             'Target URL: '.($item->target_url ?: ''),
             'Anchor text preference: '.($item->anchor_text ?: ''),
+            'Target country: '.($item->target_country ?: ''),
         ];
 
         return implode("\n", $lines);
