@@ -332,6 +332,52 @@ final readonly class SeoData
         );
     }
 
+    public static function forAiSeoChecker(): self
+    {
+        $breadcrumbItems = [
+            ['name' => 'Home', 'item' => url('/')],
+            ['name' => 'AI SEO Checker', 'item' => route('ai-seo-checker.index')],
+        ];
+
+        $faqs = [
+            ['question' => 'What is an AI SEO / GEO score?', 'answer' => 'It measures how visible a page is to AI answer engines like ChatGPT, Google AI Overviews, Perplexity, Claude and Copilot — based on real, checkable factors such as crawler access, structured data, content clarity and freshness/authority signals, weighted differently per engine.'],
+            ['question' => 'Is the checker really free?', 'answer' => 'Yes. Pasting a URL and seeing your score for every engine is free with no sign-up. Only the full PDF report — with every issue found and exact instructions to fix each one — is a one-time paid unlock.'],
+            ['question' => 'How is the score calculated?', 'answer' => 'We fetch the public page, read its robots.txt, structured data, headings, metadata and links, then score each AI engine using a weighted blend of those signals reflecting how that engine is known to crawl and cite content. It is not a live query sent to ChatGPT, Gemini or any other AI product.'],
+            ['question' => 'What do I get in the paid report?', 'answer' => 'A PDF listing every issue our audit found, in priority order, each with a plain-English fix — the exact steps to take your page toward a 100% score across every AI engine checked.'],
+            ['question' => 'How much does the full report cost?', 'answer' => 'A one-time payment of $'.number_format((float) config('ai_seo_checker.price'), 0).' via PayPal, no account required.'],
+        ];
+
+        return new self(
+            title: 'Free AI SEO Checker — Score Your Page for ChatGPT, Gemini, Perplexity & Claude | INZRA',
+            description: 'Free AI SEO (GEO) checker: paste any URL and get an instant visibility score for ChatGPT, Google AI Overviews, Perplexity, Claude and Copilot. Unlock the full optimization PDF for $'.number_format((float) config('ai_seo_checker.price'), 0).'.',
+            canonical: route('ai-seo-checker.index'),
+            breadcrumbItems: $breadcrumbItems,
+            jsonLd: [
+                self::breadcrumb($breadcrumbItems),
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'WebApplication',
+                    'name' => 'INZRA Free AI SEO Checker',
+                    'description' => 'Free tool that scores any URL for visibility across ChatGPT, Google AI Overviews, Perplexity, Claude and Copilot, with a paid PDF optimization guide.',
+                    'url' => route('ai-seo-checker.index'),
+                    'applicationCategory' => 'BusinessApplication',
+                    'operatingSystem' => 'Any (web-based)',
+                    'isAccessibleForFree' => true,
+                    'offers' => ['@type' => 'Offer', 'price' => number_format((float) config('ai_seo_checker.price'), 2, '.', ''), 'priceCurrency' => 'USD', 'description' => 'Full AI SEO optimization PDF report'],
+                ],
+                [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => collect($faqs)->map(fn ($faq) => [
+                        '@type' => 'Question',
+                        'name' => $faq['question'],
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+                    ])->all(),
+                ],
+            ],
+        );
+    }
+
     public static function forSeoBacklinkServicesIndex(): self
     {
         $breadcrumbItems = [

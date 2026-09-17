@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\SeoPublicationController;
 use App\Http\Controllers\Admin\SeoPublicationImportController;
 use App\Http\Controllers\Admin\SeoReportController as AdminSeoReportController;
 use App\Http\Controllers\Admin\SeoServiceController;
+use App\Http\Controllers\AiSeoCheckController;
+use App\Http\Controllers\AiSeoReportPayPalController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -51,6 +53,20 @@ Route::get('/markets/{market}', [MarketController::class, 'show'])->name('market
 Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
 Route::get('/image-converter', [ToolController::class, 'imageConverter'])->name('tools.image-converter');
 Route::get('/pdf-editor', [ToolController::class, 'pdfEditor'])->name('tools.pdf-editor');
+
+Route::prefix('ai-seo-checker')->name('ai-seo-checker.')->group(function () {
+    Route::get('/', [AiSeoCheckController::class, 'index'])->name('index');
+
+    Route::middleware('throttle:12,1')->group(function () {
+        Route::post('/check', [AiSeoCheckController::class, 'check'])->name('check');
+        Route::post('/{aiSeoCheck}/paypal/orders', [AiSeoReportPayPalController::class, 'createOrder'])->name('paypal.orders.create');
+        Route::post('/{aiSeoCheck}/paypal/orders/{paypalOrderId}/capture', [AiSeoReportPayPalController::class, 'captureOrder'])->name('paypal.orders.capture');
+    });
+
+    Route::get('/{aiSeoCheck}/report/pdf', [AiSeoCheckController::class, 'downloadReportPdf'])
+        ->middleware('signed')
+        ->name('report.pdf');
+});
 
 Route::get('/seo-backlink-services', [SeoBacklinkController::class, 'index'])->name('seo-backlink-services.index');
 Route::get('/seo-backlink-services/{service:slug}', [SeoBacklinkController::class, 'show'])->name('seo-backlink-services.show');

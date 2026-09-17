@@ -29,4 +29,12 @@ return [
         'route' => 'tools.pdf-editor',
     ],
 
+    'ai-seo-checker' => [
+        'name' => 'Free AI SEO Checker',
+        'icon' => 'fa-solid fa-robot',
+        'tagline' => 'Score your page for ChatGPT, Gemini, Perplexity & Claude — free',
+        'description' => 'Paste any URL and get an instant AI visibility score for every major AI engine, plus a paid PDF guide to reach 100%.',
+        'route' => 'ai-seo-checker.index',
+    ],
+
 ];

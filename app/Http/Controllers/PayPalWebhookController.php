@@ -7,6 +7,7 @@ use App\Actions\RecordSeoOrderStatusChange;
 use App\Enums\PaymentStatus;
 use App\Enums\SeoOrderStatus;
 use App\Mail\SeoOrderReceived;
+use App\Models\AiSeoCheck;
 use App\Models\Order;
 use App\Models\SeoOrder;
 use App\Services\PayPalClient;
@@ -45,9 +46,16 @@ class PayPalWebhookController extends Controller
         $resource = $request->input('resource', []);
 
         if (in_array($event, ['PAYMENT.CAPTURE.COMPLETED', 'PAYMENT.CAPTURE.DENIED', 'PAYMENT.CAPTURE.REFUNDED'], true)) {
-            // custom_id is namespaced ("seo:{id}") for SEO orders specifically
-            // so it can never collide with a marketplace Order's integer id.
-            if (Str::startsWith($resource['custom_id'] ?? '', 'seo:')) {
+            // custom_id is namespaced ("seo:{id}" / "aiseo:{id}") for these
+            // order types specifically, so they can never collide with a
+            // marketplace Order's plain integer id.
+            if (Str::startsWith($resource['custom_id'] ?? '', 'aiseo:')) {
+                $check = $this->resolveAiSeoCheck($resource);
+
+                if ($check) {
+                    $this->applyAiSeoCaptureEvent($check, $event);
+                }
+            } elseif (Str::startsWith($resource['custom_id'] ?? '', 'seo:')) {
                 $seoOrder = $this->resolveSeoOrder($resource);
 
                 if ($seoOrder) {
@@ -114,6 +122,30 @@ class PayPalWebhookController extends Controller
         (new RecordSeoOrderStatusChange)->handle($order->fresh(), SeoOrderStatus::OrderReceived);
 
         Mail::to($order->user->email)->send(new SeoOrderReceived($order->fresh()));
+    }
+
+    private function resolveAiSeoCheck(array $resource): ?AiSeoCheck
+    {
+        $checkId = Str::after($resource['custom_id'] ?? '', 'aiseo:');
+        $paypalOrderId = $resource['supplementary_data']['related_ids']['order_id'] ?? null;
+
+        return AiSeoCheck::query()
+            ->when($checkId, fn ($q) => $q->orWhere('id', $checkId))
+            ->when($paypalOrderId, fn ($q) => $q->orWhere('paypal_order_id', $paypalOrderId))
+            ->first();
+    }
+
+    private function applyAiSeoCaptureEvent(AiSeoCheck $check, string $event): void
+    {
+        match ($event) {
+            'PAYMENT.CAPTURE.COMPLETED' => $check->payment_status === PaymentStatus::Paid ? null : $check->update([
+                'payment_status' => PaymentStatus::Paid,
+                'paid_at' => $check->paid_at ?? now(),
+            ]),
+            'PAYMENT.CAPTURE.DENIED' => $check->update(['payment_status' => PaymentStatus::Unpaid]),
+            'PAYMENT.CAPTURE.REFUNDED' => $check->update(['payment_status' => PaymentStatus::Refunded]),
+            default => null,
+        };
     }
 
     private function applyCaptureEvent(Order $order, string $event): void
